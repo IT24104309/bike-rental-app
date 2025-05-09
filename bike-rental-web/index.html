@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>Admin Dashboard</header>
+
+<div class="dashboard">
+    <div class="card">
+        <h3>User Summary</h3>
+        <p><strong>1,240</strong></p>
+        <p>Active Renters: 120</p>
+        <p>Active Drivers: 85</p>
+    </div>
+
+    <div class="card">
+        <h3>Bike Summary</h3>
+        <p><strong>350</strong></p>
+        <p>Currently Rented: 45</p>
+        <p>Reported Issues: 5</p>
+    </div>
+
+    <div class="card">
+        <h3>Rental Overview</h3>
+        <p><strong>110</strong></p>
+        <p>Ongoing: 15</p>
+        <p>Completed: 50</p>
+    </div>
+
+    <div class="card">
+        <h3>Rentals Over Time</h3>
+        <canvas id="rentalsChart"></canvas>
+    </div>
+
+    <div class="card">
+        <h3>Alerts</h3>
+        <ul>
+            <li>Pending user approval for new renter Jane Doe</li>
+            <li>Bike BK-102 reported issue: flat tire</li>
+            <li>Scheduled maintenance for server on April 25</li>
+        </ul>
+    </div>
+</div>
+
+<div class="actions">
+    <button>View Logs</button>
+    <a href="admin-panel.html"><button>Manage Admins</button></a>
+    <button>User Actions</button>
+</div>
+<a href="admin-panel.html" class="nav-btn">Manage Admins</a>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
