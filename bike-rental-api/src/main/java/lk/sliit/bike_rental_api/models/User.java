@@ -1,23 +1,53 @@
 package lk.sliit.bike_rental_api.models;
 
-import java.util.List;
+import lk.sliit.bike_rental_api.enums.AccountStatus;
+import lk.sliit.bike_rental_api.enums.Role;
+
 
 public class User {
-    private int rideCount;
-    private String userType;
-    private List<String> profiles;
-    private int lastRideDaysAgo;
+    protected String id;
+    protected String name;
+    protected String email;
+    protected Role role;
+    protected AccountStatus status;
 
-    public User(int rideCount, String userType, List<String> profiles, int lastRideDaysAgo) {
-        this.rideCount = rideCount;
-        this.userType = userType;
-        this.profiles = profiles;
-        this.lastRideDaysAgo = lastRideDaysAgo;
+    public String getId() {
+        return id;
     }
 
-    public int getRideCount() { return rideCount; }
-    public String getUserType() { return userType; }
-    public List<String> getProfiles() { return profiles; }
-    public int getDaysSinceLastRide() { return lastRideDaysAgo; }
-}
+    public String getName() {
+        return name;
+    }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public AccountStatus getStatus() {
+        return status;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setStatus(AccountStatus status) {
+        this.status = status;
+    }
+}
