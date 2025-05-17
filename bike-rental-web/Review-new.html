@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Leave a Review</title>
+  <link rel="stylesheet" href="Review-new.css">
+  <style>
+
+  </style>
 </head>
 <body>
 
-<form class="review-form">
+<form class="review-form" id="reviewForm">
   <h2>Leave a Review</h2>
 
   <label for="name">Your Name:</label>
-  <input type="text" id="name" name="name">
+  <input type="text" id="name" name="name" required>
 
   <label for="rating">Rating:</label>
   <div class="stars" id="stars">
@@ -20,26 +24,60 @@
     <span class="star" data-value="4">&#9733;</span>
     <span class="star" data-value="5">&#9733;</span>
   </div>
+  <input type="hidden" id="rating" name="rating" required>
 
   <label for="review">Your Review:</label>
-  <textarea id="review" name="review" rows="4"></textarea>
+  <textarea id="review" name="review" rows="4" required></textarea>
 
   <div class="buttons">
-    <button type="button" class="cancel-btn">Cancel</button>
+    <button type="reset" class="cancel-btn">Cancel</button>
     <button type="submit" class="submit-btn">Submit</button>
   </div>
 </form>
 
-<script>
-  // Simple star rating interaction
+<script src="Review-new.js">
+  // Star rating interaction
   const stars = document.querySelectorAll('.star');
+  const ratingInput = document.getElementById('rating');
+
   stars.forEach(star => {
     star.addEventListener('click', () => {
+      const rating = star.getAttribute('data-value');
+      ratingInput.value = rating;
+
       stars.forEach(s => s.classList.remove('checked'));
-      for (let i = 0; i < star.dataset.value; i++) {
+      for (let i = 0; i < rating; i++) {
         stars[i].classList.add('checked');
       }
     });
+  });
+
+  // Handle form submission
+  document.getElementById('reviewForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const rating = document.getElementById('rating').value;
+    const review = document.getElementById('review').value;
+
+    const reviewData = {
+      name: name,
+      rating: rating,
+      review: review,
+      timestamp: new Date().toISOString()
+    };
+
+    const jsonStr = JSON.stringify(reviewData, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'review.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   });
 </script>
 
