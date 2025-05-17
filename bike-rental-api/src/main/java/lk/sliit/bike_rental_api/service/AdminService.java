@@ -21,6 +21,30 @@ public class AdminService {
     public List<AdminUser> getAllAdmins() {
         return new ArrayList<>(adminMap.values());
     }
+    public AdminUser login(String email, String password) {
+        Optional<AdminUser> match = adminMap.values().stream()
+                .filter(admin -> admin.getEmail().equalsIgnoreCase(email))
+                .findFirst();
+
+        if (match.isEmpty()) {
+            throw new RuntimeException("Invalid email or password");
+        }
+
+        AdminUser admin = match.get();
+
+        if (admin.getStatus() != AccountStatus.ACTIVE) {
+            throw new RuntimeException("Account is inactive");
+        }
+
+        // For demo purposes: password = firstName(lowercase) + 123
+        String expectedPassword = admin.getName().split(" ")[0].toLowerCase() + "123";
+        if (!expectedPassword.equals(password)) {
+            throw new RuntimeException("Invalid email or password");
+        }
+
+        return admin;
+    }
+
 
     public AdminUser getAdminById(String id) {
         return adminMap.get(id);
