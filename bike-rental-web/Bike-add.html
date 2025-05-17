@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div>
+      <form>
+        <h2>Bike Registration</h2>
+        <p>Please fill in this form to add a bike.</p>
+        <hr>
+        <label for="bikemodel"><b>Bike Model</b></label>
+        <input type="text" id="bikemodel" placeholder="Enter Bike Model" name="bikemodel" required>
+
+        <label for="registrationnum"><b>Registration Number</b></label>
+        <input type="text" id="registrationnum" placeholder="Enter Registration Number" name="registrationnum" required>
+
+        <label for="biketype"><b>Bike Type</b></label>
+        <input type="text" id="biketype" placeholder="Enter Bike Type" name="biketype" required>
+
+        <label for="hourlyrate"><b>Hourly Rate</b></label>
+        <input type="text" id="hourlyrate" placeholder="Enter Hourly Rate" name="hourlyrate" required>
+
+        <div class="clearfix">
+          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancel-btn">Cancel</button>
+          <button type="submit" class="signup">Confirm</button>
+        </div>
+      </form>
+    </div>
+</body>
+</html>
