@@ -5,6 +5,7 @@ import lk.sliit.bike_rental_api.service.AdminService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin-user-management")
@@ -14,6 +15,13 @@ public class AdminController {
 
     public AdminController(AdminService adminService) {
         this.adminService = adminService;
+    }
+
+    @PostMapping("/login")
+    public AdminUser login(@RequestBody Map<String, String> loginRequest) {
+        String email = loginRequest.get("email");
+        String password = loginRequest.get("password");
+        return adminService.login(email, password);
     }
 
     @GetMapping
