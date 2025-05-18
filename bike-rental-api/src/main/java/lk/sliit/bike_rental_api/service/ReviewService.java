@@ -1,12 +1,14 @@
 package lk.sliit.bike_rental_api.service;
 
 import lk.sliit.bike_rental_api.models.Review;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class ReviewService {
     private final Map<String, Review> reviewMap = new LinkedHashMap<>();
 

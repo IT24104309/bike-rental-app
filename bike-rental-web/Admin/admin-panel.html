@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Admin User Management Panel</title>
-    <link rel="stylesheet" href="admin-style.css" />
+    <link rel="stylesheet" href="admin-style.css"/>
 </head>
 <body>
 <h1>Admin User Management Panel</h1>
@@ -49,10 +49,10 @@
 <div id="editModal" class="modal hidden">
     <div class="modal-content">
         <h3>Edit Admin</h3>
-        <input id="editId" type="text" readonly />
-        <input id="editName" type="text" />
-        <input id="editEmail" type="email" />
-        <input id="editRole" type="text" />
+        <input id="editId" type="text" readonly/>
+        <input id="editName" type="text"/>
+        <input id="editEmail" type="email"/>
+        <input id="editRole" type="text"/>
         <select id="editStatus">
             <option value="ACTIVE">Active</option>
             <option value="INACTIVE">Inactive</option>
@@ -63,18 +63,22 @@
         </div>
     </div>
 </div>
-<!-- Add Admin Modal -->
+
 <div id="addModal" class="modal hidden">
     <div class="modal-content">
         <h3>Create New Admin</h3>
-        <input id="addId" type="text" placeholder="Admin ID" />
-        <input id="addName" type="text" placeholder="Full Name" />
-        <input id="addEmail" type="email" placeholder="Email" />
-        <input id="addRole" type="text" placeholder="Role (e.g., ADMIN, MODERATOR)" />
+
+        <input id="addName" type="text" placeholder="Full Name" required />
+        <input id="addEmail" type="email" placeholder="Email" required />
+        <input id="addPassword" type="password" placeholder="Password" required />
+        <input id="confirmPassword" type="password" placeholder="Confirm Password" required />
+        <input id="addRole" type="text" placeholder="Role (e.g., ADMIN, MODERATOR)" required />
+
         <select id="addStatus">
             <option value="ACTIVE">Active</option>
             <option value="INACTIVE">Inactive</option>
         </select>
+
         <div class="modal-buttons">
             <button id="confirmAdd" class="yes-btn">Add</button>
             <button id="cancelAdd" class="no-btn">Cancel</button>

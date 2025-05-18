@@ -18,7 +18,7 @@ document.getElementById('adminLoginForm').addEventListener('submit', function (e
         })
         .then(admin => {
             alert(`Welcome ${admin.name} (${admin.role})`);
-            window.location.href = 'index.html'; // ✅ Redirect to admin dashboard
+            window.location.href = 'Admin-dashboard.html'; // ✅ Redirect to admin dashboard
         })
         .catch(err => {
             alert(err.message || 'Login failed!');
