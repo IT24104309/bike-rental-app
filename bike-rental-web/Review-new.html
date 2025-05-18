@@ -4,16 +4,12 @@
   <meta charset="UTF-8">
   <title>Leave a Review</title>
   <link rel="stylesheet" href="Review-new.css">
-  <style>
-
-  </style>
 </head>
 <body>
-
 <form class="review-form" id="reviewForm">
   <h2>Leave a Review</h2>
 
-  <label for="name">Your Name:</label>
+  <label for="name">Your Username:</label>
   <input type="text" id="name" name="name" required>
 
   <label for="rating">Rating:</label>
@@ -26,11 +22,11 @@
   </div>
   <input type="hidden" id="rating" name="rating" required>
 
-  <label for="review">Your Review:</label>
-  <textarea id="review" name="review" rows="4" required></textarea>
+  <label for="desc">Your Review:</label>
+  <textarea id="desc" name="desc" rows="4" required></textarea>
 
   <div class="buttons">
-    <button type="reset" class="cancel-btn">Cancel</button>
+    <button type="button" class="cancel-btn" onclick="window.location.href='Review-display.html'">Cancel</button>
     <button type="submit" class="submit-btn">Submit</button>
   </div>
 </form>
@@ -44,7 +40,6 @@
     star.addEventListener('click', () => {
       const rating = star.getAttribute('data-value');
       ratingInput.value = rating;
-
       stars.forEach(s => s.classList.remove('checked'));
       for (let i = 0; i < rating; i++) {
         stars[i].classList.add('checked');
@@ -53,31 +48,38 @@
   });
 
   // Handle form submission
-  document.getElementById('reviewForm').addEventListener('submit', function(e) {
+  document.getElementById('reviewForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     const name = document.getElementById('name').value;
     const rating = document.getElementById('rating').value;
-    const review = document.getElementById('review').value;
+    const desc = document.getElementById('desc').value;
 
     const reviewData = {
+      id: Date.now(),
       name: name,
       rating: rating,
-      review: review,
+      desc: desc,
       timestamp: new Date().toISOString()
     };
 
-    const jsonStr = JSON.stringify(reviewData, null, 2);
-    const blob = new Blob([jsonStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+  try {
+      const response = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reviewData)
+      });
 
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'review.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+      if (response.ok) {
+        alert('Review submitted successfully!');
+        window.location.href = 'Review-display.html';
+      } else {
+        alert('Error submitting review.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error submitting review.');
+    }
   });
 </script>
 

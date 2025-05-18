@@ -1,23 +1,22 @@
 package lk.sliit.bike_rental_api.models;
 
 public class Review {
-    private String id, name;
+    private long id;
+    private String userName;
     private int rating;
     private String desc;
 
-    public Review(String id, String name, int rating, String desc) {
+    public Review(long id, String userName, int rating, String desc) {
         this.id = id;
-        this.name = name;
+        this.userName = userName;
         this.rating = rating;
         this.desc = desc;
     }
 
-    public String getId() {
-        return id;
-    }
+    public long getId() { return id; }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
     public int getRating() {
@@ -28,12 +27,10 @@ public class Review {
         return desc;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setId(long id) { this.id = id; }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String name) {
+        this.userName = userName;
     }
 
     public void setRating(int rating) {
@@ -43,4 +40,5 @@ public class Review {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
 }
