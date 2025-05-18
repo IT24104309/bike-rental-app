@@ -1,4 +1,4 @@
-package lk.sliit.bike_rental_api.model;
+package lk.sliit.bike_rental_api.models;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

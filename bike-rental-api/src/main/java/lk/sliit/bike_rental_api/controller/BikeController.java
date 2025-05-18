@@ -1,6 +1,6 @@
 package lk.sliit.bike_rental_api.controller;
 
-import lk.sliit.bike_rental_api.model.Bike;
+import lk.sliit.bike_rental_api.models.Bike;
 import lk.sliit.bike_rental_api.service.BikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class BikeController {
     public BikeService bikeService;
 
 
-    @PostMapping(/"Bikes")
+    @PostMapping("/Bikes")
     public ResponseEntity<String> addBike(@RequestBody Bike bike) {
         bikeService.addBike(bike);
         return ResponseEntity.ok("Bike added successfully!");
