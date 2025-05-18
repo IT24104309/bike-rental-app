@@ -1,4 +1,6 @@
 package lk.sliit.bike_rental_api.service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 import lk.sliit.bike_rental_api.enums.AccountStatus;
 import lk.sliit.bike_rental_api.enums.Role;
@@ -10,12 +12,14 @@ import java.util.*;
 @Service
 public class AdminService {
     private final Map<String, AdminUser> adminMap = new LinkedHashMap<>();
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     public AdminService() {
-        // Preload admins
-        createAdmin(new AdminUser("A001", "John Smith", "john.smith@example.com", Role.SUPER_ADMIN, AccountStatus.ACTIVE));
-        createAdmin(new AdminUser("A002", "Jane Doe", "jane.doe@example.com", Role.MODERATOR, AccountStatus.INACTIVE));
-        createAdmin(new AdminUser("A003", "Bob Johnson", "bob.johnson@example.com", Role.ADMIN, AccountStatus.ACTIVE));
+        // Preload admins with encrypted passwords
+        createAdmin(new AdminUser("A001", "John Smith", "john.smith@example.com", Role.SUPER_ADMIN, AccountStatus.ACTIVE, passwordEncoder.encode("john123")));
+        createAdmin(new AdminUser("A002", "Jane Doe", "jane.doe@example.com", Role.MODERATOR, AccountStatus.INACTIVE, passwordEncoder.encode("jane123")));
+        createAdmin(new AdminUser("A003", "Bob Johnson", "bob.johnson@example.com", Role.ADMIN, AccountStatus.ACTIVE, passwordEncoder.encode("bob123")));
     }
 
     public List<AdminUser> getAllAdmins() {
@@ -36,11 +40,11 @@ public class AdminService {
             throw new RuntimeException("Account is inactive");
         }
 
-        // For demo purposes: password = firstName(lowercase) + 123
-        String expectedPassword = admin.getName().split(" ")[0].toLowerCase() + "123";
-        if (!expectedPassword.equals(password)) {
+        // ✅ SECURE: Match raw password against hashed password
+        if (!passwordEncoder.matches(password, admin.getPassword())) {
             throw new RuntimeException("Invalid email or password");
         }
+
 
         return admin;
     }
@@ -61,4 +65,5 @@ public class AdminService {
     public void deleteAdmin(String id) {
         adminMap.remove(id);
     }
+
 }
