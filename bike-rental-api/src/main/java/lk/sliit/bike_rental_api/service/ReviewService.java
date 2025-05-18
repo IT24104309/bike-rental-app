@@ -13,25 +13,25 @@ public class ReviewService {
     private final Map<String, Review> reviewMap = new LinkedHashMap<>();
 
     public ReviewService() {
-        createReview(new Review("R001", "John Smith", 5, "Great Service!"));
-        createReview(new Review("R002", "Jane Doe", 3, "Tire is worn out.."));
-        createReview(new Review("R003", "Bob Johnson", 1, "Too expensive!!"));
+        createReview(new Review(100000001, "JohnSmith", 5, "Great Service!"));
+        createReview(new Review(100000002, "JaneDoe", 3, "Tire is worn out.."));
+        createReview(new Review(100000003, "BobJohnson", 1, "Too expensive!!"));
     }
 
     public List<Review> getAllReviews() {
         return new ArrayList<>(reviewMap.values());
     }
 
-    public Review getReviewById(String id) {
+    public Review getReviewById(long id) {
         return reviewMap.get(id);
     }
 
     public void createReview(Review review) {
-        reviewMap.put(review.getId(), review);
+        reviewMap.put(review.getId()+"", review);
     }
 
     public void updateReview(Review reviewUpdate) {
-        reviewMap.put(reviewUpdate.getId(), reviewUpdate);
+        reviewMap.put(reviewUpdate.getId()+"", reviewUpdate);
     }
 
     public void deleteReview(String id) {

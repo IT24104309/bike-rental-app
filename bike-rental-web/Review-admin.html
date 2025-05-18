@@ -6,12 +6,8 @@
     <link rel="stylesheet" href="Review-admin.css">
 </head>
 <body>
-
 <h1>Admin Review Moderation</h1>
-
-<div class="add-section">
-
-</div>
+<div class="add-section"></div>
 
 <table>
     <thead>
@@ -22,36 +18,95 @@
         <th>Actions</th>
     </tr>
     </thead>
-    <tbody>
-    <tr>
-        <td>@jane_doe</td>
-        <td>★★★★☆</td>
-        <td>Great experience! The bike was in perfect condition.</td>
-        <td>
-            <button class="action-btn view-btn">View</button>
-            <button class="action-btn delete-btn">Delete</button>
-        </td>
-    </tr>
-    <tr>
-        <td>@bikefan42</td>
-        <td>★★★★★</td>
-        <td>Super friendly and the ride was smooth. Highly recommended.</td>
-        <td>
-            <button class="action-btn view-btn">View</button>
-            <button class="action-btn delete-btn">Delete</button>
-        </td>
-    </tr>
-    <tr>
-        <td>@urbanrider</td>
-        <td>★★★☆☆</td>
-        <td>Bike was decent, but could have used some maintenance.</td>
-        <td>
-            <button class="action-btn view-btn">View</button>
-            <button class="action-btn delete-btn">Delete</button>
-        </td>
-    </tr>
-    </tbody>
 </table>
+<!-- Popup for viewing full review -->
+<div id="reviewPopup" class="popup">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h3>Review Details</h3>
+        <p><strong>Username:</strong> <span id="popupUsername"></span></p>
+        <p><strong>Rating:</strong> <span id="popupRating"></span></p>
+        <p><strong>Review:</strong> <span id="popupReview"></span></p>
+    </div>
+</div>
+<script>
+    // Fetch and display reviews
+    async function loadReviews() {
+      const tableBody = document.getElementById('reviewsTableBody');
+      tableBody.innerHTML = '<tr><td colspan="4">Loading reviews...</td></tr>';
 
+      try {
+        const response = await fetch('/api/reviews');
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const reviews = await response.json();
+        tableBody.innerHTML = '';
+
+        if (reviews.length === 0) {
+          tableBody.innerHTML = '<tr><td colspan="4">No reviews available.</td></tr>';
+          return;
+        }
+        reviews.forEach(review => {
+        const row = document.createElement('tr');
+        const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+        const truncatedReview = review.review.length > 50 ? review.review.substring(0, 47) + '...' : review.review;
+        row.innerHTML = `
+          <td>@${review.name}</td>
+          <td>${stars}</td>
+          <td>${truncatedReview}</td>
+          <td>
+            <button class="action-btn view-btn" onclick="viewReview('${review.name}', '${stars}', '${review.review.replace(/'/g, "\\'")}')">View</button>
+            <button class="action-btn delete-btn" onclick="deleteReview(${review.id})">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    } catch (error) {
+      console.error('Error loading reviews:', error);
+      tableBody.innerHTML = '<tr><td colspan="4">Failed to load reviews.</td></tr>';
+    }
+  }
+  // Show popup with review details
+  function viewReview(username, rating, review) {
+    document.getElementById('popupUsername').textContent = '@' + username;
+    document.getElementById('popupRating').textContent = rating;
+    document.getElementById('popupReview').textContent = review;
+    document.getElementById('reviewPopup').style.display = 'block';
+  }
+  // Close popup
+  function closePopup() {
+    document.getElementById('reviewPopup').style.display = 'none';
+  }
+
+  // Delete review
+  async function deleteReview(id) {
+    if (confirm('Are you sure you want to delete this review?')) {
+      try {
+        const response = await fetch(`/api/reviews/${id}`, {
+          method: 'DELETE'
+        });
+        if (response.ok) {
+          loadReviews(); // Refresh table
+        } else {
+          alert('Error deleting review.');
+        }
+      } catch (error) {
+        console.error('Error deleting review:', error);
+        alert('Error deleting review.');
+      }
+    }
+  }
+  // Load reviews on page load
+  loadReviews();
+
+  // Close popup when clicking outside
+  window.onclick = function(event) {
+    const popup = document.getElementById('reviewPopup');
+    if (event.target === popup) {
+      popup.style.display = 'none';
+    }
+  };
+</script>
 </body>
 </html>

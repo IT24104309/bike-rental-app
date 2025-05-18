@@ -9,44 +9,124 @@
 
 <h1>Reviews of Alex Johnson</h1>
 
-<div class="reviews-container">
-    <div class="review-box">
-        <h3>@jane_doe</h3>
-        <div class="stars">★★★★★</div>
-        <div class="review-text">Amazing experience! Highly recommend.</div>
+<div class="reviews-container" id="reviewsContainer"></div>
+
+<div class="review-box">
+    <h3>@jane_doe</h3>
+    <div class="stars">★★★★★</div>
+    <div class="review-text">Amazing experience! Highly recommend.</div>
+</div>
+<div class="review-box">
+    <h3>@mike123</h3>
+    <div class="stars">★★★★☆</div>
+    <div class="review-text">Smooth rental process. Bike was in good condition.</div>
+</div>
+<div class="review-box">
+    <h3>@citycycler</h3>
+    <div class="stars">★★★☆☆</div>
+    <div class="review-text">Average experience. The seat was a bit uncomfortable.</div>
+    <div class="review-actions">
+        <button class="edit-button">Edit</button>
+        <button class="delete-button">Delete</button>
     </div>
-    <div class="review-box">
-        <h3>@mike123</h3>
-        <div class="stars">★★★★☆</div>
-        <div class="review-text">Smooth rental process. Bike was in good condition.</div>
-    </div>
-    <div class="review-box">
-        <h3>@citycycler</h3>
-        <div class="stars">★★★☆☆</div>
-        <div class="review-text">Average experience. The seat was a bit uncomfortable.</div>
-        <div class="review-actions">
-            <button class="edit-button">Edit</button>
-            <button class="delete-button">Delete</button>
-        </div>
-    </div>
-    <div class="review-box">
-        <h3>@emily_ride</h3>
-        <div class="stars">★★★★★</div>
-        <div class="review-text">Loved it! Great service and very polite renter.</div>
-    </div>
-    <div class="review-box">
-        <h3>@biker_bob</h3>
-        <div class="stars">★★☆☆☆</div>
-        <div class="review-text">Bike chain came loose during the ride. Needs maintenance.</div>
-    </div>
+</div>
+<div class="review-box">
+    <h3>@emily_ride</h3>
+    <div class="stars">★★★★★</div>
+    <div class="review-text">Loved it! Great service and very polite renter.</div>
+</div>
+<div class="review-box">
+    <h3>@biker_bob</h3>
+    <div class="stars">★★☆☆☆</div>
+    <div class="review-text">Bike chain came loose during the ride. Needs maintenance.</div>
 </div>
 
 <div class="prompt-section">
     <h3>Leave a Review?</h3>
     <div class="center-wrapper">
-        <button class="add-review">Add a Review <span>+</span></button>
+        <button class="add-review" onclick="window.location.href='Review-new.html'">Add a Review <span>+</span></button>
     </div>
 </div>
+<script>
+    let currentUser = localStorage.getItem('username');
 
+    // Prompt for username if not set
+    if (!currentUser) {
+      currentUser = prompt('Please enter your username:') || 'anonymous';
+      localStorage.setItem('username', currentUser);
+    }
+
+    // Fetch and display reviews
+    async function loadReviews() {
+      try {
+        const response = await fetch('/api/reviews');
+        const reviews = await response.json();
+        const container = document.getElementById('reviewsContainer');
+        container.innerHTML = '';
+
+        reviews.forEach(review => {
+          const reviewBox = document.createElement('div');
+          reviewBox.className = 'review-box';
+          reviewBox.dataset.id = review.id;
+
+          const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+          reviewBox.innerHTML = `
+            <h3>@${review.name}</h3>
+            <div class="stars">${stars}</div>
+            <div class="review-text">${review.review}</div>
+            ${review.name === currentUser ? `
+              <div class="review-actions">
+                <button class="edit-button" onclick="editReview(${review.id}, '${review.review}')">Edit</button>
+                <button class="delete-button" onclick="deleteReview(${review.id})">Delete</button>
+              </div>
+            ` : ''}
+          `;
+          container.appendChild(reviewBox);
+        });
+      } catch (error) {
+        console.error('Error loading reviews:', error);
+      }
+    }
+
+    // Edit review
+    function editReview(id, currentText) {
+      const newText = prompt('Edit your review:', currentText);
+      if (newText !== null) {
+        fetch(`/api/reviews/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ review: newText })
+        })
+          .then(response => {
+            if (response.ok) {
+              loadReviews();
+            } else {
+              alert('Error updating review.');
+            }
+          })
+          .catch(error => console.error('Error:', error));
+      }
+    }
+
+    // Delete review
+    function deleteReview(id) {
+      if (confirm('Are you sure you want to delete this review?')) {
+        fetch(`/api/reviews/${id}`, {
+          method: 'DELETE'
+        })
+          .then(response => {
+            if (response.ok) {
+              loadReviews();
+            } else {
+              alert('Error deleting review.');
+            }
+          })
+          .catch(error => console.error('Error:', error));
+      }
+    }
+
+    // Load reviews on page load
+    loadReviews();
+</script>
 </body>
 </html>
