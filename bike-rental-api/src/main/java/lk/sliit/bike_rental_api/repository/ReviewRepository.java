@@ -47,7 +47,7 @@ public class ReviewRepository {
     }
 
     public List<Review> findAll() throws IOException {
-        File file = new File(dataFile.replace("classpath:", "src/main/resources/"));
+        File file = new File(dataFile.replace("classpath:", "src/main/resources/reviews.txt"));
         if (!file.exists()) {
             return new ArrayList<>();
         }
@@ -64,7 +64,7 @@ public class ReviewRepository {
     }
 
     private void writeToFile(List<Review> reviews) throws IOException {
-        File file = new File(dataFile.replace("classpath:", "src/main/resources/"));
+        File file = new File(dataFile.replace("classpath:", "src/main/resources/reviews.txt"));
         objectMapper.writeValue(file, reviews);
     }
 }

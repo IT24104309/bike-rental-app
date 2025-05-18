@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bike Rental App - Home</title>
+    <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          font-family: 'Segoe UI', sans-serif;
+          background: linear-gradient(to bottom right, #e9f5f2, #d4f1f4);
+          color: #333;
+          min-height: 100vh;
+        }
+
+        header {
+          background-color: #ffffff;
+          padding: 20px 40px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          position: sticky;
+          top: 0;
+          z-index: 10;
+        }
+
+        .logo {
+          font-size: 26px;
+          font-weight: bold;
+          color: #28a745;
+        }
+
+        .auth-buttons button {
+          margin-left: 15px;
+          padding: 10px 22px;
+          font-size: 15px;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: background 0.3s ease;
+        }
+
+        .signup-btn {
+          background-color: #28a745;
+          color: white;
+        }
+
+        .signup-btn:hover {
+          background-color: #218838;
+        }
+
+        .login-btn {
+          background-color: #007bff;
+          color: white;
+        }
+
+        .login-btn:hover {
+          background-color: #0069d9;
+        }
+
+        .main-content {
+          text-align: center;
+          padding: 80px 20px 30px;
+        }
+
+        .main-content h1 {
+          font-size: 38px;
+          margin-bottom: 10px;
+          color: #222;
+        }
+
+        .main-content p {
+          font-size: 18px;
+          color: #555;
+          max-width: 800px;
+          margin: 0 auto 60px;
+        }
+
+        .features {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 30px;
+          padding-bottom: 60px;
+        }
+
+        .feature-box {
+          background-color: #ffffff;
+          width: 240px;
+          height: 240px;
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border-radius: 15px;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-box:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-box h3 {
+          color: #28a745;
+          margin-bottom: 10px;
+          font-size: 20px;
+        }
+
+        .feature-box p {
+          color: #555;
+          font-size: 15px;
+          max-width: 200px;
+          line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+          .feature-box {
+            width: 80%;
+          }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">BikeRental</div>
+    <div class="auth-buttons">
+        <button class="signup-btn">Sign Up</button>
+        <button class="login-btn">Login</button>
+    </div>
+</header>
+
+<div class="main-content">
+    <h1>Welcome to BikeRental</h1>
+    <p>Fast, affordable, and private bike rentals designed for your daily needs.</p>
+
+    <div class="features">
+        <div class="feature-box">
+            <h3>Efficient</h3>
+            <p>Find and rent bikes instantly with real-time tracking and smooth returns.</p>
+        </div>
+        <div class="feature-box">
+            <h3>Affordable</h3>
+            <p>Low-cost rentals without any hidden charges or surprise fees.</p>
+        </div>
+        <div class="feature-box">
+            <h3>Privacy-Focused</h3>
+            <p>Your personal data stays safe — no tracking or third-party sharing.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
