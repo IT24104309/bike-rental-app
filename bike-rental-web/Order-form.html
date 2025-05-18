@@ -1,76 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rent a Bike</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Bike Rental</title>
   <link rel="stylesheet" href="Order-form.css">
 </head>
-<script src="rentalForm.js"></script>
 <body>
-
-  <div class="container">
-    <h2>Rent a Bike</h2>
-
-    <div class="form-box">
-      <div class="form-group">
-        <label for="bike-type">Type:</label>
-        <select id="bike-type">
-          <option value="standard">Standard</option>
-          <option value="electric">Electric</option>
-          <option value="mountain">Mountain</option>
-          <option value="folding">Folding</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="hours">No. of Hours:</label>
-        <input type="number" id="hours" placeholder="Enter number of hours" min="1">
-      </div>
+<div class="container">
+  <h2>Rent a Bike</h2>
+  <div class="form-box">
+    <div class="form-group">
+      <label for="renterName">Renter Name:</label>
+      <input type="text" id="renterName" placeholder="Enter your name" required>
     </div>
-
-    <div class="bikes-grid">
-      <div class="bike-card">
-        <input type="radio" name="bike" value="bike1">
-        <div class="bike-detail"><strong>Renter ID:</strong> RS101</div>
-        <div class="bike-detail"><strong>Model:</strong> Placeholder</div>
-        <div class="bike-detail"><strong>Hourly Rate:</strong> $12</div>
-      </div>
-
-      <div class="bike-card">
-        <input type="radio" name="bike" value="bike2">
-        <div class="bike-detail"><strong>Renter ID:</strong> RJ202</div>
-        <div class="bike-detail"><strong>Model:</strong> Placeholder</div>
-        <div class="bike-detail"><strong>Hourly Rate:</strong> $8</div>
-      </div>
-
-      <div class="bike-card">
-        <input type="radio" name="bike" value="bike3">
-        <div class="bike-detail"><strong>Renter ID:</strong> CG303</div>
-        <div class="bike-detail"><strong>Model:</strong> Placeholder</div>
-        <div class="bike-detail"><strong>Hourly Rate:</strong> $10</div>
-      </div>
-
-      <div class="bike-card">
-        <input type="radio" name="bike" value="bike4">
-        <div class="bike-detail"><strong>Renter ID:</strong> DL404</div>
-        <div class="bike-detail"><strong>Model:</strong> Placeholder</div>
-        <div class="bike-detail"><strong>Hourly Rate:</strong> $9</div>
-      </div>
-
-      <div class="bike-card">
-        <input type="radio" name="bike" value="bike5">
-        <div class="bike-detail"><strong>Renter ID:</strong> EW505</div>
-        <div class="bike-detail"><strong>Model:</strong> Placeholder</div>
-        <div class="bike-detail"><strong>Hourly Rate:</strong> $11</div>
-      </div>
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" placeholder="Enter your username" required>
     </div>
-
-    <div class="button-group">
-      <button class="cancel-btn" onclick="alert('Rental cancelled.')">Cancel</button>
-      <button class="confirm-btn" onclick="alert('Bike rental confirmed!')">Confirm</button>
+    <div class="form-group">
+      <label for="bikeType">Bike Type:</label>
+      <select id="bikeType" required>
+        <option value="">Select Bike Type</option>
+        <option value="Electric Bike">Electric Bike</option>
+        <option value="Mountain Bike">Mountain Bike</option>
+        <option value="Road Bike">Road Bike</option>
+        <option value="Hybrid Bike">Hybrid Bike</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="hours">Rental Hours:</label>
+      <input type="number" id="hours" min="1" placeholder="Enter hours" required>
     </div>
   </div>
-
+  <div class="bikes-grid" id="bikesGrid"></div>
+  <div class="button-group">
+    <button class="cancel-btn" onclick="window.location.href='Past-order.html'">Cancel</button>
+    <button class="confirm-btn" id="submitBtn" disabled>Submit</button>
+  </div>
+</div>
+<script src="Order-form.js"></script>
 </body>
 </html>
