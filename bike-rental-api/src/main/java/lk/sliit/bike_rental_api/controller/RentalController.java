@@ -1,7 +1,8 @@
 package lk.sliit.bike_rental_api.controller;
 
-import com.bikerental.model.RentalTransaction;
-import com.bikerental.service.RentalService;
+
+import lk.sliit.bike_rental_api.models.RentalTransaction;
+import lk.sliit.bike_rental_api.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

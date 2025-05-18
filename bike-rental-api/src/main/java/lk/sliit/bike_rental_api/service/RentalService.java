@@ -1,7 +1,8 @@
 package lk.sliit.bike_rental_api.service;
 
-import com.bikerental.model.RentalTransaction;
-import com.bikerental.repository.RentalRepository;
+
+import lk.sliit.bike_rental_api.models.RentalTransaction;
+import lk.sliit.bike_rental_api.repository.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,8 @@ public class RentalService {
     @Autowired
     private RentalRepository rentalRepository;
 
-    public RentalTransaction rentBike(String renterName, String username, String bikeId, 
-                                    String bikeType, int hours, double hourlyRate, boolean isPremiumUser) 
+    public RentalTransaction rentBike(String renterName, String username, String bikeId,
+                                      String bikeType, int hours, double hourlyRate, boolean isPremiumUser)
                                     throws IOException {
         if (!rentalRepository.isBikeAvailable(bikeId)) {
             throw new IllegalStateException("Bike is not available");
