@@ -51,8 +51,6 @@ public class AdminService {
         return admin;
     }
 
-
-
     public AdminUser getAdminById(String id) {
         return adminMap.get(id);
     }
