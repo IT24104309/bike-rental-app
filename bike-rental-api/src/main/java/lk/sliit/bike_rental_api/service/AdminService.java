@@ -12,7 +12,7 @@ import java.util.*;
 
 @Service
 public class AdminService {
-    private static final String ADMIN_FILE_PATH = "./store/Admin.txt";
+    private static final String ADMIN_FILE_PATH = "Admin.txt";
     private final Map<String, AdminUser> adminMap = new LinkedHashMap<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
