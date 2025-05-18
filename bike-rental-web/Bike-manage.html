@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bike Management Dashboard</title>
+    <link rel="stylesheet" href="Bike-manage.css">
+</head>
+<body>
+
+    <div class="top-bar">
+        <h1>Bike Management Dashboard</h1>
+    </div>
+
+    <table class="bike-table">
+        <thead>
+            <tr>
+                <th>Bike ID</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>BK001</td>
+                <td>Normal</td>
+                <td>Available</td>
+                <td class="action-buttons">
+                    <a href="editBike.html?id=BK001" class="btn edit-btn">Edit</a>
+                    <a href="deleteBike.html?id=BK001" class="btn delete-btn">Delete</a>
+                </td>
+            </tr>
+            <tr>
+                <td>BK002</td>
+                <td>Deluxe</td>
+                <td>Rented</td>
+                <td class="action-buttons">
+                    <a href="editBike.html?id=BK002" class="btn edit-btn">Edit</a>
+                    <a href="deleteBike.html?id=BK002" class="btn delete-btn">Delete</a>
+                </td>
+            </tr>
+            <!-- Additional rows will go here -->
+        </tbody>
+    </table>
+    <a href="addBike.html" class="btn add-btn">+ Add Bike</a>
+
+</body>
+</html>
