@@ -1,4 +1,4 @@
-package lk.sliit.bike_rental_api.repository;
+ /*package lk.sliit.bike_rental_api.repository;
 
 import lk.sliit.bike_rental_api.models.Review;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,7 +17,7 @@ public class ReviewRepository {
 
     @Value("${app.data.file}")
     private String dataFile;
-
+    private static final String REVIEW_FILE_PATH = "reviews.txt";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public Review save(Review review) throws IOException {
@@ -47,7 +47,7 @@ public class ReviewRepository {
     }
 
     public List<Review> findAll() throws IOException {
-        File file = new File(dataFile.replace("classpath:", "src/main/resources/reviews.txt"));
+        File file = new File(dataFile.replace("classpath:", "src/main/resources/"));
         if (!file.exists()) {
             return new ArrayList<>();
         }
@@ -64,7 +64,8 @@ public class ReviewRepository {
     }
 
     private void writeToFile(List<Review> reviews) throws IOException {
-        File file = new File(dataFile.replace("classpath:", "src/main/resources/reviews.txt"));
+        File file = new File(dataFile.replace("classpath:", "src/main/resources/"));
         objectMapper.writeValue(file, reviews);
     }
 }
+*/
