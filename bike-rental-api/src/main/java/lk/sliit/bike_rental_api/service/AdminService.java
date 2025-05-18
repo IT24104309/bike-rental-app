@@ -13,7 +13,7 @@ import java.util.*;
 @Service
 public class AdminService {
     private static final String ADMIN_FILE_PATH = "Admin.txt";
-    private final Map<String, AdminUser> adminMap = new LinkedHashMap<>();
+    private final Map<String, AdminUser> adminMap = new LinkedHashMap<>();//my key is admin id & my value is adminuser
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 
