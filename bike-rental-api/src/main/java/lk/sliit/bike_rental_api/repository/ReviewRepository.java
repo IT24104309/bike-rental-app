@@ -18,7 +18,7 @@ public class ReviewRepository {
     @Value("${app.data.file}")
     private String dataFile;
 
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public Review save(Review review) throws IOException {
         List<Review> reviews = findAll();
