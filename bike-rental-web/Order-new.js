@@ -1,3 +1,4 @@
+// Order-new.js
 document.addEventListener('DOMContentLoaded', () => {
   const rentalData = JSON.parse(sessionStorage.getItem('rentalData'));
   if (!rentalData) {

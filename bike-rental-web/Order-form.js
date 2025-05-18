@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
+// Order-form.js
+document.addEventListener('DOMContentLoaded', async () => {
   const bikeTypeSelect = document.getElementById('bikeType');
   const hoursInput = document.getElementById('hours');
   const bikesGrid = document.getElementById('bikesGrid');
@@ -22,11 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
           const bikeCard = document.createElement('div');
           bikeCard.className = 'bike-card';
           bikeCard.innerHTML = `
-                        <input type="radio" name="bike" value="${bike.bikeId}" data-type="${bike.bikeType}" data-rate="${bike.hourlyRate}">
-                        <div class="bike-detail"><strong>Bike ID:</strong> ${bike.bikeId}</div>
-                        <div class="bike-detail"><strong>Type:</strong> ${bike.bikeType}</div>
-                        <div class="bike-detail"><strong>Hourly Rate:</strong> $${bike.hourlyRate.toFixed(2)}</div>
-                    `;
+            <input type="radio" name="bike" value="${bike.bikeId}" data-type="${bike.bikeType}" data-rate="${bike.hourlyRate}">
+            <div class="bike-detail"><strong>Bike ID:</strong> ${bike.bikeId}</div>
+            <div class="bike-detail"><strong>Type:</strong> ${bike.bikeType}</div>
+            <div class="bike-detail"><strong>Hourly Rate:</strong> $${bike.hourlyRate.toFixed(2)}</div>
+          `;
           bikesGrid.appendChild(bikeCard);
         });
 
@@ -54,22 +55,32 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Handle form submission
-  submitBtn.addEventListener('click', () => {
-    const renterName = document.getElementById('renterName').value;
-    const username = document.getElementById('username').value;
+  submitBtn.addEventListener('click', async () => {
     const hours = parseInt(hoursInput.value);
 
-    // Store data in sessionStorage to pass to Order-new.html
-    sessionStorage.setItem('rentalData', JSON.stringify({
-      renterName,
-      username,
-      bikeId: selectedBike.bikeId,
-      bikeType: selectedBike.bikeType,
-      hours,
-      hourlyRate: selectedBike.hourlyRate,
-      isPremiumUser: false // Assume non-premium for simplicity
-    }));
+    try {
+      // Fetch user data from user management API
+      const userResponse = await fetch('/api/user');
+      if (!userResponse.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+      const userData = await userResponse.json();
 
-    window.location.href = 'Order-new.html';
+      // Store data in sessionStorage to pass to Order-new.html
+      sessionStorage.setItem('rentalData', JSON.stringify({
+        renterName: userData.renterName,
+        username: userData.username,
+        bikeId: selectedBike.bikeId,
+        bikeType: selectedBike.bikeType,
+        hours,
+        hourlyRate: selectedBike.hourlyRate,
+        isPremiumUser: userData.isPremiumUser || false // Use user data for premium status
+      }));
+
+      window.location.href = 'Order-new.html';
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      alert('Error retrieving user information. Please try again.');
+    }
   });
 });
