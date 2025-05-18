@@ -1,35 +1,31 @@
+<!-- Order-new.html (unchanged) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Order Summary - Bike Rental</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Summary</title>
   <link rel="stylesheet" href="Order-new.css">
 </head>
-<script src="orderSummary.js"></script>
 <body>
-
-  <div class="container">
-    <h2>Order Summary</h2>
-
-    <div class="summary-box">
-      <div class="summary-item"><strong>Renter Name:</strong> John Doe</div>
-      <div class="summary-item"><strong>Username:</strong> johndoe123</div>
-      <div class="summary-item"><strong>Bike ID:</strong> BK2025X001</div>
-      <div class="summary-item"><strong>Bike Type:</strong> Electric Bike</div>
-    </div>
-
-    <div class="cost-summary">
-      <div class="summary-item"><strong>Number of Hours:</strong> 3</div>
-      <div class="summary-item"><strong>Hourly Rate:</strong> $10.00</div>
-      <div class="summary-item"><strong>Total Amount:</strong> $30.00</div>
-    </div>
-
-    <div class="button-group">
-      <button class="cancel-btn" onclick="alert('Order has been cancelled.')">Cancel</button>
-      <button class="confirm-btn" onclick="alert('Payment confirmed!')">Confirm Payment</button>
-    </div>
+<div class="container">
+  <h2>Order Summary</h2>
+  <div class="summary-box">
+    <div class="summary-item"><strong>Renter Name:</strong> <span id="renterName"></span></div>
+    <div class="summary-item"><strong>Username:</strong> <span id="username"></span></div>
+    <div class="summary-item"><strong>Bike ID:</strong> <span id="bikeId"></span></div>
+    <div class="summary-item"><strong>Bike Type:</strong> <span id="bikeType"></span></div>
   </div>
-
+  <div class="cost-summary">
+    <div class="summary-item"><strong>Number of Hours:</strong> <span id="hours"></span></div>
+    <div class="summary-item"><strong>Hourly Rate:</strong> $<span id="hourlyRate"></span></div>
+    <div class="summary-item"><strong>Total Amount:</strong> $<span id="totalAmount"></span></div>
+  </div>
+  <div class="button-group">
+    <button id="cancelBtn" class="cancel-btn">Cancel</button>
+    <button id="confirmBtn" class="confirm-btn">Confirm Payment</button>
+  </div>
+</div>
+<script src="Order-new.js"></script>
 </body>
 </html>
