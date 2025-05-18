@@ -1,4 +1,4 @@
-package lk.sliit.bike_rental_api.repository;
+ /*package lk.sliit.bike_rental_api.repository;
 
 import lk.sliit.bike_rental_api.models.Review;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,8 +17,8 @@ public class ReviewRepository {
 
     @Value("${app.data.file}")
     private String dataFile;
-
-    private final ObjectMapper objectMapper;
+    private static final String REVIEW_FILE_PATH = "reviews.txt";
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public Review save(Review review) throws IOException {
         List<Review> reviews = findAll();
@@ -68,3 +68,4 @@ public class ReviewRepository {
         objectMapper.writeValue(file, reviews);
     }
 }
+*/

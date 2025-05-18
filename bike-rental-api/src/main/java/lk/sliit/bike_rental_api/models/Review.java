@@ -6,6 +6,10 @@ public class Review {
     private int rating;
     private String desc;
 
+    public Review(){
+
+    }
+
     public Review(long id, String userName, int rating, String desc) {
         this.id = id;
         this.userName = userName;

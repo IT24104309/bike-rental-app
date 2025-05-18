@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lk.sliit.bike_rental_api.enums.AccountStatus;
 import lk.sliit.bike_rental_api.enums.Role;
 
-import java.io.Serializable;
 
 
-public class AdminUser implements Serializable {
+
+public class AdminUser {
     private static final long serialVersionUID = 1L;
     private String id;
     private String name;
@@ -15,7 +15,6 @@ public class AdminUser implements Serializable {
     private Role role;
     private AccountStatus status;
 
-    @JsonIgnore // Prevent password from being serialized in responses
     private String password;
 
     public AdminUser() {

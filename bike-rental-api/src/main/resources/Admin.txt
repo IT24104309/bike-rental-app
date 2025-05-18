@@ -1,0 +1,15 @@
+[ {
+  "id" : "A001",
+  "name" : "Sayu Wanigasooriya",
+  "email" : "S@gmail.com",
+  "role" : "SUPER_ADMIN",
+  "status" : "ACTIVE",
+  "password" : "sayu123"
+}, {
+  "id" : "A002",
+  "name" : "sithara",
+  "email" : "si@gmail.com",
+  "role" : "ADMIN",
+  "status" : "ACTIVE",
+  "password" : "si123"
+} ]

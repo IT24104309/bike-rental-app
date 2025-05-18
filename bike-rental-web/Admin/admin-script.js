@@ -37,7 +37,7 @@ async function loadAdmins() {
         // EDIT
         row.querySelector(".edit-btn").addEventListener("click", () => {
             selectedAdminId = admin.id;
-            //document.getElementById("editId").value = admin.id;
+            document.getElementById("editId").value = admin.id;
             document.getElementById("editName").value = admin.name;
             document.getElementById("editEmail").value = admin.email;
             document.getElementById("editRole").value = admin.role;
@@ -58,11 +58,12 @@ document.getElementById("cancelAdd").addEventListener("click", () => {
 
 document.getElementById("confirmAdd").addEventListener("click", async () => {
     const newAdmin = {
-        //id: document.getElementById("addId").value,
+        id: document.getElementById("addId").value,
         name: document.getElementById("addName").value,
         email: document.getElementById("addEmail").value,
         role: document.getElementById("addRole").value.toUpperCase(),
-        status: document.getElementById("addStatus").value.toUpperCase()
+        status: document.getElementById("addStatus").value.toUpperCase(),
+        password: document.getElementById("addPassword").value,
     };
 
     // Send POST request to backend
@@ -85,11 +86,13 @@ document.getElementById("confirmAdd").addEventListener("click", async () => {
     }
 
     // Clear form inputs
-    //document.getElementById("addId").value = "";
+    document.getElementById("addId").value = "";
     document.getElementById("addName").value = "";
     document.getElementById("addEmail").value = "";
     document.getElementById("addRole").value = "";
     document.getElementById("addStatus").value = "ACTIVE";
+    document.getElementById("addPassword").value = "";
+    document.getElementById("addPasswordConfirm").value = "";
 });
 
 
@@ -119,11 +122,12 @@ document.getElementById("cancelEdit").addEventListener("click", () => {
 // SAVE EDIT
 document.getElementById("saveEdit").addEventListener("click", async () => {
     const updated = {
-        //id: document.getElementById("editId").value,
+        id: document.getElementById("editId").value,
         name: document.getElementById("editName").value,
         email: document.getElementById("editEmail").value,
         role: document.getElementById("editRole").value.toUpperCase(),
-        status: document.getElementById("editStatus").value.toUpperCase()
+        status: document.getElementById("editStatus").value.toUpperCase(),
+        password: document.getElementById("editPassword").value,
     };
 
     await fetch(`${apiBase}/${updated.id}`, {

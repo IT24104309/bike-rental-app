@@ -1,17 +1,20 @@
 package lk.sliit.bike_rental_api.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import lk.sliit.bike_rental_api.enums.AccountStatus;
 import lk.sliit.bike_rental_api.enums.Role;
 import lk.sliit.bike_rental_api.models.AdminUser;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.*;
 import java.util.*;
 
 @Service
 public class AdminService {
-    private static final String ADMIN_FILE_PATH = "./store/Admin.txt";
+    private static final String ADMIN_FILE_PATH = "Admin.txt";
     private final Map<String, AdminUser> adminMap = new LinkedHashMap<>();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
 
     public AdminService() {
@@ -48,8 +51,6 @@ public class AdminService {
         return admin;
     }
 
-
-
     public AdminUser getAdminById(String id) {
         return adminMap.get(id);
     }
@@ -68,36 +69,25 @@ public class AdminService {
         adminMap.remove(id);
         saveAdminsToFile();
     }
-
     private void loadAdminsFromFile() {
         File file = new File(ADMIN_FILE_PATH);
-        if (!file.exists() || file.length() == 0) return; // 🔐 skip if empty
+        if (!file.exists() || file.length() == 0) return;
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            Object obj = ois.readObject();
-            if (obj instanceof List<?>) {
-                List<?> list = (List<?>) obj;
-                for (Object item : list) {
-                    if (item instanceof AdminUser) {
-                        AdminUser admin = (AdminUser) item;
-                        adminMap.put(admin.getId(), admin);
-                    }
-                }
+        try {
+            List<AdminUser> admins = objectMapper.readValue(file, new TypeReference<>() {});
+            for (AdminUser admin : admins) {
+                adminMap.put(admin.getId(), admin);
             }
-        } catch (EOFException eof) {
-            // safe fallback - file might be empty or corrupt
-            System.err.println("Admin file is empty or corrupt. Starting fresh.");
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException("Failed to load admin data", e);
+        } catch (IOException e) {
+            System.err.println("⚠️ Failed to load admins from file: " + e.getMessage());
         }
     }
 
-
     private void saveAdminsToFile() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ADMIN_FILE_PATH))) {
-            oos.writeObject(new ArrayList<>(adminMap.values()));
+        try {
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(ADMIN_FILE_PATH), new ArrayList<>(adminMap.values()));
         } catch (IOException e) {
-            throw new RuntimeException("Failed to save admin data", e);
+            throw new RuntimeException("Failed to save admins to file", e);
         }
     }
 }
