@@ -14,4 +14,3 @@ public class BikeRentalApiApplication {
 		SpringApplication.run(BikeRentalApiApplication.class, args);
 	}
 }
-
