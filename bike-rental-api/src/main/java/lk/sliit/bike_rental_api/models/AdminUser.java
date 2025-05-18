@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lk.sliit.bike_rental_api.enums.AccountStatus;
 import lk.sliit.bike_rental_api.enums.Role;
 
-public class AdminUser {
+import java.io.Serializable;
+
+
+public class AdminUser implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String id;
     private String name;
     private String email;
@@ -18,7 +22,7 @@ public class AdminUser {
         // Required for JSON deserialization
     }
 
-    public AdminUser(String id, String name, String email, Role role, AccountStatus status, String password) {
+    public AdminUser(String id, String name, String email, Role role, AccountStatus status,String password) {
         this.id = id;
         this.name = name;
         this.email = email;
