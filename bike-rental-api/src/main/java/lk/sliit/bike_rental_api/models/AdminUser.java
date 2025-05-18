@@ -8,7 +8,6 @@ import lk.sliit.bike_rental_api.enums.Role;
 
 
 public class AdminUser {
-    private static final long serialVersionUID = 1L;
     private String id;
     private String name;
     private String email;
@@ -18,7 +17,6 @@ public class AdminUser {
     private String password;
 
     public AdminUser() {
-        // Required for JSON deserialization
     }
 
     public AdminUser(String id, String name, String email, Role role, AccountStatus status,String password) {
