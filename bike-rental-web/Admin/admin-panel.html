@@ -8,6 +8,7 @@
 </head>
 <body>
 <h1>Admin User Management Panel</h1>
+
 <div class="top-bar">
     <button class="add-admin">+ Add Admin</button>
 </div>
@@ -45,35 +46,58 @@
     </div>
 </div>
 
-<!-- Edit Modal -->
 <div id="editModal" class="modal hidden">
     <div class="modal-content">
         <h3>Edit Admin</h3>
-        <input id="editId" type="text" readonly/>
-        <input id="editName" type="text"/>
-        <input id="editEmail" type="email"/>
-        <input id="editRole" type="text"/>
+
+        <label for="editId">Admin ID</label>
+        <input id="editId" type="text" readonly />
+
+        <label for="editName">Name</label>
+        <input id="editName" type="text" />
+
+        <label for="editEmail">Email</label>
+        <input id="editEmail" type="email" />
+
+        <label for="editRole">Role</label>
+        <input id="editRole" type="text" />
+
+        <label for="editStatus">Status</label>
         <select id="editStatus">
             <option value="ACTIVE">Active</option>
             <option value="INACTIVE">Inactive</option>
         </select>
+
         <div class="modal-buttons">
             <button id="saveEdit" class="yes-btn">Save</button>
             <button id="cancelEdit" class="no-btn">Cancel</button>
         </div>
     </div>
 </div>
-
+<!-- Create New Admin Modal -->
 <div id="addModal" class="modal hidden">
     <div class="modal-content">
         <h3>Create New Admin</h3>
 
-        <input id="addName" type="text" placeholder="Full Name" required />
-        <input id="addEmail" type="email" placeholder="Email" required />
-        <input id="addPassword" type="password" placeholder="Password" required />
-        <input id="confirmPassword" type="password" placeholder="Confirm Password" required />
-        <input id="addRole" type="text" placeholder="Role (e.g., ADMIN, MODERATOR)" required />
+        <label for="addId">Admin ID</label>
+        <input id="addId" type="text" required />
 
+        <label for="addName">Name</label>
+        <input id="addName" type="text" required />
+
+        <label for="addEmail">Email</label>
+        <input id="addEmail" type="email" required />
+
+        <label for="addPassword">Password</label>
+        <input id="addPassword" type="password" required />
+
+        <label for="confirmPassword">Confirm Password</label>
+        <input id="confirmPassword" type="password" required />
+
+        <label for="addRole">Role</label>
+        <input id="addRole" type="text" placeholder="e.g., ADMIN, MODERATOR" required />
+
+        <label for="addStatus">Status</label>
         <select id="addStatus">
             <option value="ACTIVE">Active</option>
             <option value="INACTIVE">Inactive</option>
