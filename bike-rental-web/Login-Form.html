@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <script src="Login-Form.js"></script>
 </head>
 <body>
@@ -18,7 +18,8 @@
         <input type="password" id="psw" placeholder="Enter Password" name="psw" required>
 
         <div class="clearfix">
-            <button type="submit" class="signup">Log In</button>
+            <button type="button" onclick="location.href = 'index.html';" class="cancel-btn">Cancel</button>
+            <button type="submit" class="signup" onclick="location.href = 'index.html';">Log In</button>
         </div>
     </form>
 
