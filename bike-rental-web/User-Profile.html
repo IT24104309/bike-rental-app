@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>User Profile - Bike Rental</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+        .profile-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px;
+            position: relative;
+        }
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 20px;
+        }
+        .welcome-message h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4CAF50;
+        }
+        .button-group {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .button-group a {
+            display: block;
+            text-align: center;
+            padding: 12px 20px;
+            background: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .button-group a:hover {
+            background: #45a049;
+        }
+        @media (max-width: 600px) {
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .profile-pic {
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="welcome-message">
+            <h2>Welcome, &lt;username&gt;</h2>
+        </div>
+        <img src="User_icon.png" alt="Profile Picture" class="profile-pic"/>
+    </div>
+
+    <div class="button-group">
+        <a href="Order-form.html">Rent a Bike</a>
+        <a href="Past-order.html">View Past Orders</a>
+        <a href="Renter-signup.html">Become a Renter</a>
+    </div>
+</div>
+</body>
+</html>
