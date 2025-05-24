@@ -1,0 +1,8 @@
+[ {
+  "userID" : "1b23a9a3-0a1a-4f38-b61e-3b2e1a11bc15",
+  "username" : "sayu",
+  "password" : "sayu",
+  "email" : "S@gmail.com",
+  "phoneNumber" : "0769748125",
+  "userType" : null
+} ]

@@ -1,0 +1,15 @@
+[ {
+  "bikeId" : "e2db082b-fcb6-4f10-bbd4-f4260d08bf70",
+  "type" : "Electric Bike",
+  "status" : null,
+  "hourlyRate" : 2.0,
+  "registrationNumber" : "BEC 123",
+  "model" : "yamaha"
+}, {
+  "bikeId" : "0c7fb86a-fd18-413d-9a92-507a462745a0",
+  "type" : "Electric Bike",
+  "status" : null,
+  "hourlyRate" : 5.0,
+  "registrationNumber" : "BEC 124",
+  "model" : "Yamaha"
+} ]
