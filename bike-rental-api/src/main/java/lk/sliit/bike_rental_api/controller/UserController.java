@@ -1,51 +1,37 @@
 package lk.sliit.bike_rental_api.controller;
 
 
+import lk.sliit.bike_rental_api.models.AdminUser;
 import lk.sliit.bike_rental_api.models.User;
 import lk.sliit.bike_rental_api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
-@Controller
+
+@RestController
+@RequestMapping("/api/user-management")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public String home() {
-        return "login";
-    }
-
-    @GetMapping("/register")
-    public String registerForm(Model model) {
-        model.addAttribute("user", new User());
-        return "register";
-    }
-
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user) {
+    public ResponseEntity<Void> registerUser(@RequestBody User user) {
         user.setUserID(UUID.randomUUID().toString());
         userService.registerUser(user);
-        return "redirect:/";
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, Model model) {
-        User user = userService.findByUsernameOrId(username);
-        if (user != null && user.getPassword().equals(password)) {
-            if ("Admin".equalsIgnoreCase(user.getUserType())) {
-                return "redirect:/admin";
-            } else {
-                model.addAttribute("user", user);
-                return "user-home";
-            }
-        }
-        model.addAttribute("error", "Invalid credentials");
-        return "login";
+    public ResponseEntity<User> login(@RequestBody Map<String, String> loginRequest) {
+        String username = loginRequest.get("username");
+        String password = loginRequest.get("password");
+        return ResponseEntity.ok(userService.login(username, password));
     }
 
     @GetMapping("/admin")
@@ -60,6 +46,20 @@ public class UserController {
         userService.deleteUser(userId);
         return "redirect:/admin";
     }
+
+    @PostMapping("/set-role")
+    @ResponseBody
+    public ResponseEntity<String> setUserRole(@RequestParam String userId, @RequestParam String userType) {
+        User user = userService.findByUsernameOrId(userId);
+        if (user != null) {
+            user.setUserType(userType);
+            userService.updateUser(user);
+            return ResponseEntity.ok("Role updated");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+
 
     @PostMapping("/update")
     public String updateUser(@ModelAttribute User user) {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign in</title>
-    <link rel="stylesheet" href="Admin-login.css">
+    <link rel="stylesheet" href="Bike-add.css">
 </head>
 <body>
     <div>
@@ -18,7 +18,13 @@
         <input type="text" id="registrationnum" placeholder="Enter Registration Number" name="registrationnum" required>
 
         <label for="biketype"><b>Bike Type</b></label>
-        <input type="text" id="biketype" placeholder="Enter Bike Type" name="biketype" required>
+          <select id="biketype" name="biketype" required>
+              <option value="" disabled selected>Select Bike Type</option>
+              <option value="Electric Bike">Electric Bike</option>
+              <option value="Mountain Bike">Mountain Bike</option>
+              <option value="Road Bike">Road Bike</option>
+              <option value="Hybrid Bike">Hybrid Bike</option>
+          </select>
 
         <label for="hourlyrate"><b>Hourly Rate</b></label>
         <input type="text" id="hourlyrate" placeholder="Enter Hourly Rate" name="hourlyrate" required>

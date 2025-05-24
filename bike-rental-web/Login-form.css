@@ -1,5 +1,5 @@
-.light-text = {
-    color:gray;
+.light-text {
+    color: gray;
 }
 
 section, footer = {

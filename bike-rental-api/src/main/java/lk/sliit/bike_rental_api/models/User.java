@@ -12,10 +12,6 @@ public class User {
     private String phoneNumber;
     private String userType;
 
-    public String getUserID() {
-        return userID;
-    }
-
     public User() {
     }
 
@@ -27,7 +23,9 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.userType = userType;
     }
-
+    public String getUserID() {
+        return userID;
+    }
     public void setUserID(String userID) {
 
         this.userID = userID;
