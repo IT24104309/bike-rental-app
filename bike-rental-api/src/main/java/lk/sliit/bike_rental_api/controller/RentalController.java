@@ -1,4 +1,4 @@
-package lk.sliit.bike_rental_api.controller;
+/* package lk.sliit.bike_rental_api.controller;
 
 import lk.sliit.bike_rental_api.models.Bike;
 import lk.sliit.bike_rental_api.models.RentalTransaction;
@@ -78,3 +78,4 @@ public class RentalController {
 
 
 }
+ */
