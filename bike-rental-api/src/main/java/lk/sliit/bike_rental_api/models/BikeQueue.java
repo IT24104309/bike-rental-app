@@ -25,7 +25,7 @@ public class BikeQueue {
     public void enqueue(User user) {
         // Check if the queue is full
         if (size == userQueue.length) return;
-        int last = (first+size) % userQueue.length;
+        int last = (first + size) % userQueue.length;
         userQueue[last] = user;
         size++;
     }
@@ -39,5 +39,9 @@ public class BikeQueue {
         first = (first + 1) % userQueue.length;
         size--;
         return user;
+    }
+
+    public int getSize() {
+        return this.size;
     }
 }
