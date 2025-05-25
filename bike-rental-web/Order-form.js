@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (bikeType) {
       try {
-        const response = await fetch('http://localhost:8080/api/bikes/available?bikeType=${encodeURIComponent(bikeType)}');
+        const response = await fetch(`http://localhost:8080/api/bikes/available?bikeType=${encodeURIComponent(bikeType)}`);
         const bikes = await response.json();
         // Bikes are already sorted by bikeType server-side
         bikes.forEach(bike => {
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
       // Fetch user data from user management API
-      const userResponse = await fetch('/api/user');
+      const userResponse = await fetch(`http://localhost:8080/api/users`);
       if (!userResponse.ok) {
         throw new Error('Failed to fetch user data');
       }

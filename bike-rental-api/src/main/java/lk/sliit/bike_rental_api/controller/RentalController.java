@@ -22,42 +22,7 @@ public class RentalController {
     @Autowired
     private BikeService bikeService;
 
-    // Create: Rent a bike
-    @PostMapping("/rent")
-    public ResponseEntity<RentalTransaction> rentBike(
-            @RequestParam String username,
-            @RequestParam String bikeId,
-            @RequestParam int hours) throws IOException {
-        RentalTransaction transaction = rentalService.rentBike(username, bikeId, hours);
-        return ResponseEntity.ok(transaction);
-    }
 
-    // Read: Get all rentals
-    @GetMapping("/rentals")
-    public ResponseEntity<List<RentalTransaction>> getAllRentals() throws IOException {
-        return ResponseEntity.ok(rentalService.getAllRentals());
-    }
-
-    // Update: Confirm bike return
-    @PutMapping("/return/{orderId}")
-    public ResponseEntity<String> confirmReturn(@PathVariable String orderId) throws IOException {
-        rentalService.confirmReturn(orderId);
-        return ResponseEntity.ok("Bike returned successfully");
-    }
-
-    // Update: Cancel rental
-    @PutMapping("/cancel/{orderId}")
-    public ResponseEntity<String> cancelRental(@PathVariable String orderId) throws IOException {
-        rentalService.cancelRental(orderId);
-        return ResponseEntity.ok("Rental cancelled successfully");
-    }
-
-    // Delete: Remove completed rental
-    @DeleteMapping("/delete/{orderId}")
-    public ResponseEntity<String> deleteRental(@PathVariable String orderId) throws IOException {
-        rentalService.deleteCompletedRental(orderId);
-        return ResponseEntity.ok("Completed rental deleted successfully");
-    }
 
     // New: Get available bikes by type
     @GetMapping("/available")
@@ -78,4 +43,6 @@ public class RentalController {
 
 
 }
+
+
  */
