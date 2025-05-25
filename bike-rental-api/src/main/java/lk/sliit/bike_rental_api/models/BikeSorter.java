@@ -1,51 +1,56 @@
 package lk.sliit.bike_rental_api.models;
 
 import java.util.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BikeSorter {
 
-    private List<Bike> bikeList;
-
-    public BikeSorter(List<Bike> bikeList) {
-        this.bikeList = bikeList;
-    }
-
-    private void swap(int i, int j) {
-        Bike temp = bikeList.get(i);
-        bikeList.set(i, bikeList.get(j));
-        bikeList.set(j, temp);
-    }
-
-    private int partition(int low, int high) {
-        int pivot = Integer.parseInt(bikeList.get(high).getBikeId());
+    private static int partition(List<Bike> bikes, int low, int high) {
+        String pivot = bikes.get(high).getType();
         int i = low - 1;
-        for (int j = low; j <= high; j++) {
-            int compareId = Integer.parseInt(bikeList.get(j).getBikeId());
-            if (compareId < pivot) {
+        for (int j = low; j < high; j++) {
+            if (bikes.get(j).getType().compareToIgnoreCase(pivot) <= 0) {
                 i++;
-                swap(i, j);
+                Bike temp = bikes.get(i);
+                bikes.set(i, bikes.get(j));
+                bikes.set(j, temp);
             }
         }
-        swap(i + 1, high);
+        Bike temp = bikes.get(i + 1);
+        bikes.set(i + 1, bikes.get(high));
+        bikes.set(high, temp);
         return i + 1;
     }
 
-    private void quickSort(int low, int high) {
+    private static void quickSort(List<Bike> bikes, int low, int high) {
         if (low < high) {
-            int pi = partition(low, high);
-            quickSort(low, pi - 1);
-            quickSort(pi + 1, high);
+            int pi = partition(bikes, low, high);
+            quickSort(bikes, low, pi - 1);
+            quickSort(bikes, pi + 1, high);
         }
     }
 
-    public List<Bike> quickSortByType(String type) {
-        List<Bike> tempList = bikeList;
-        bikeList = new ArrayList<Bike>();
-        for (Bike bike: tempList) {
-            if (!bike.getType().equals(type)) continue;
-            bikeList.add(bike);
+    public static List<Bike> getBikesByType(String filePath, String bikeType) {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Bike> bikes = new ArrayList<>();
+
+        Bike[] bikeArray = null;
+        try {
+            bikeArray = mapper.readValue(new File(filePath), Bike[].class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        quickSort(0, bikeList.size());
-        return bikeList;
+
+        for (Bike bike: bikeArray) {
+            if (bike.getType() != null && bike.getType().equalsIgnoreCase(bikeType)) {
+                bikes.add(bike);
+            }
+        }
+        quickSort(bikes, 0, bikes.size()-1);
+        return bikes;
     }
 }

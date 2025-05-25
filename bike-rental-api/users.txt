@@ -5,4 +5,11 @@
   "email" : "S@gmail.com",
   "phoneNumber" : "0769748125",
   "userType" : null
+}, {
+  "userID" : "8ceb00d9-b791-4d48-9acc-16d85879facb",
+  "username" : "pasindi",
+  "password" : "pasindi",
+  "email" : "pasindi@gmail.com",
+  "phoneNumber" : "0763839583",
+  "userType" : null
 } ]
