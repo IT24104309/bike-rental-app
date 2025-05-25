@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f7fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .main {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      padding: 20px 30px;
+      width: 500px;
+      text-align: center;
+      position: relative;
+    }
+
+    .main h2 {
+      color: #333;
+    }
+
+    .main h2 span {
+      font-weight: normal;
+    }
+
+    .avatar {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #4CAF50;
+      background: url('https://cdn-icons-png.flaticon.com/512/847/847969.png') no-repeat center;
+      background-size: 70%;
+    }
+
+    .action-btn {
+      padding: 15px;
+      margin: 10px 0;
+      width: 100%;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .action-btn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+<div class="main">
+  <div class="avatar"></div>
+  <h2>Welcome, <span id="username">User</span></h2>
+  <hr>
+  <button class="action-btn" onclick="location.href='order-form.html'">Rent a Bike</button>
+  <button class="action-btn" onclick="location.href='Past-order.html'">View Past Orders</button>
+  <button class="action-btn" onclick="location.href='bike-add.html'">Become a Renter</button>
+  <button class="action-btn" onclick="location.href='Bike-manage.html'">View Registered Bikes</button>
+</div>
+
+<script>
+  // Assume username is saved in localStorage after login/register
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  if (user && user.username) {
+    document.getElementById("username").textContent = user.username;
+  }
+</script>
+
+</body>
+</html>

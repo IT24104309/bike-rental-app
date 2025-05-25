@@ -7,9 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-
+@RequestMapping("/api/bike-management")
 public class BikeController {
 
     @Autowired
@@ -18,6 +19,7 @@ public class BikeController {
 
     @PostMapping("/Bikes")
     public ResponseEntity<String> addBike(@RequestBody Bike bike) {
+        bike.setBikeId(UUID.randomUUID().toString());
         bikeService.addBike(bike);
         return ResponseEntity.ok("Bike added successfully!");
     }

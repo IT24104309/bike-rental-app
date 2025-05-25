@@ -2,6 +2,7 @@ package lk.sliit.bike_rental_api.controller;
 
 import lk.sliit.bike_rental_api.models.AdminUser;
 import lk.sliit.bike_rental_api.service.AdminService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,34 +19,37 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public AdminUser login(@RequestBody Map<String, String> loginRequest) {
+    public ResponseEntity<AdminUser> login(@RequestBody Map<String, String> loginRequest) {
         String email = loginRequest.get("email");
         String password = loginRequest.get("password");
-        return adminService.login(email, password);
+        return ResponseEntity.ok(adminService.login(email, password));
     }
 
     @GetMapping
-    public List<AdminUser> getAll() {
-        return adminService.getAllAdmins();
+    public ResponseEntity<List<AdminUser>> getAll() {
+        return ResponseEntity.ok(adminService.getAllAdmins());
     }
 
     @GetMapping("/{id}")
-    public AdminUser getOne(@PathVariable String id) {
-        return adminService.getAdminById(id);
+    public ResponseEntity<AdminUser> getOne(@PathVariable String id) {
+        return ResponseEntity.ok(adminService.getAdminById(id));
     }
 
     @PostMapping
-    public void create(@RequestBody AdminUser admin) {
+    public ResponseEntity<Void> create(@RequestBody AdminUser admin) {
         adminService.createAdmin(admin);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable String id, @RequestBody AdminUser admin) {
+    public ResponseEntity<Void> update(@PathVariable String id, @RequestBody AdminUser admin) {
         adminService.updateAdmin(admin);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         adminService.deleteAdmin(id);
+        return ResponseEntity.ok().build();
     }
 }

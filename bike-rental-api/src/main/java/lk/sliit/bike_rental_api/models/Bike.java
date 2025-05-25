@@ -8,16 +8,21 @@ public class Bike implements Serializable {
     private String bikeId;
     private String type;
     private String status;
-
+    private double hourlyRate;
+    private String registrationNumber;
+    private String model;
 
     public Bike() {
     }
 
 
-    public Bike(String bikeId, String type, String status) {
+    public Bike(String bikeId, String type, String status, double hourlyRate, String registrationNumber, String model) {
         this.bikeId = bikeId;
         this.type = type;
         this.status = status;
+        this.hourlyRate = hourlyRate;
+        this.registrationNumber = registrationNumber;
+        this.model = model;
     }
 
 
@@ -46,5 +51,27 @@ public class Bike implements Serializable {
         this.status = status;
     }
 
+    public double getHourlyRate() {
+        return hourlyRate;
+    }
 
+    public void setHourlyRate(double hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
+    }
+
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
 }

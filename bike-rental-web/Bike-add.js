@@ -46,7 +46,7 @@ function submitBikeData(bikeData) {
     bikeData.hourlyRate = parseFloat(bikeData.hourlyRate);
 
     // 🔄 Backend API request
-    fetch('http://localhost:8080/api/bikes', {
+    fetch('http://localhost:8080/api/bike-management/Bikes', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -57,10 +57,10 @@ function submitBikeData(bikeData) {
             if (!response.ok) {
                 return response.text().then(msg => { throw new Error(msg); });
             }
-            return response.json();
+            return response;
         })
         .then(createdBike => {
-            alert(`Bike ${createdBike.model} (${createdBike.registrationNumber}) added successfully!`);
+            alert(`Bike added successfully!`);
             form.reset(); // Reset the form
         })
         .catch(err => {

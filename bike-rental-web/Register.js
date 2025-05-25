@@ -2,12 +2,12 @@ document.getElementById("signupForm").addEventListener("submit", async function(
     event.preventDefault(); // Prevent default form submission
 
     // Get form values
-    const fullName = document.getElementById("fullname").value.trim();
     const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value.trim();
     const phone = document.getElementById("phone").value.trim();
-    const password = document.getElementById("psw").value;
-    const confirmPassword = document.getElementById("psw-repeat").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
 
     // Validation
     if (!validateEmail(email)) {
@@ -20,19 +20,8 @@ document.getElementById("signupForm").addEventListener("submit", async function(
         return;
     }
 
-    if (password !== confirmPassword) {
-        alert("Passwords do not match.");
-        return;
-    }
-
-    if (password.length < 6) {
-        alert("Password must be at least 6 characters long.");
-        return;
-    }
-
     // Data to send
     const data = {
-        fullName: fullName,
         username: username,
         email: email,
         phoneNumber: phone,
@@ -40,7 +29,7 @@ document.getElementById("signupForm").addEventListener("submit", async function(
     };
 
     try {
-        const response = await fetch("localhost:8080/api/register", {
+        const response = await fetch("http://localhost:8080/api/user-management/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -50,7 +39,8 @@ document.getElementById("signupForm").addEventListener("submit", async function(
 
         if (response.ok) {
             alert("Account created successfully!");
-            document.getElementById("signupForm").reset(); // Clear the form
+            window.location.href = "User-dashboard.html"; // ✅ Redirect after successful registration
+            return;
         } else {
             const error = await response.json();
             alert("Signup failed: " + (error.message || "Server error"));
@@ -69,4 +59,15 @@ function validateEmail(email) {
 function validatePhone(phone) {
     const re = /^\d{10,15}$/;
     return re.test(phone);
+}
+function validateForm() {
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return false;
+    }
+    return false; // prevent default form submission
+
 }

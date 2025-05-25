@@ -18,7 +18,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
     };
 
     try {
-        const response = await fetch("/api/login", {
+        const response = await fetch("http://localhost:8080/api/user-management/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -29,7 +29,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         if (response.ok) {
             // Example: Redirect to dashboard
             alert("Login successful!");
-            window.location.href = "/dashboard"; // or your protected route
+            window.location.href = "User-dashboard.html"; // or your protected route
         } else {
             const error = await response.json();
             alert("Login failed: " + (error.message || "Invalid credentials"));
