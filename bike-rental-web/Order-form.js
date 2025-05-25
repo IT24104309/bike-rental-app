@@ -1,4 +1,3 @@
-// Order-form.js
 document.addEventListener('DOMContentLoaded', async () => {
   const bikeTypeSelect = document.getElementById('bikeType');
   const hoursInput = document.getElementById('hours');
@@ -15,17 +14,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (bikeType) {
       try {
-        const response = await fetch(`/api/bikes/available?bikeType=${encodeURIComponent(bikeType)}`);
+        const response = await fetch(`/api/orders/available?bikeType=${encodeURIComponent(bikeType)}`);
         const bikes = await response.json();
+
         // Sort bikes by bikeId
         bikes.sort((a, b) => a.bikeId.localeCompare(b.bikeId));
         bikes.forEach(bike => {
           const bikeCard = document.createElement('div');
           bikeCard.className = 'bike-card';
           bikeCard.innerHTML = `
-            <input type="radio" name="bike" value="${bike.bikeId}" data-type="${bike.bikeType}" data-rate="${bike.hourlyRate}">
+            <input type="radio" name="bike" value="${bike.bikeId}">
             <div class="bike-detail"><strong>Bike ID:</strong> ${bike.bikeId}</div>
-            <div class="bike-detail"><strong>Type:</strong> ${bike.bikeType}</div>
+            <div class="bike-detail"><strong>Type:</strong> ${bike.type}</div>
             <div class="bike-detail"><strong>Hourly Rate:</strong> $${bike.hourlyRate.toFixed(2)}</div>
           `;
           bikesGrid.appendChild(bikeCard);
@@ -34,11 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Handle bike selection
         bikesGrid.querySelectorAll('input[type="radio"]').forEach(radio => {
           radio.addEventListener('change', () => {
-            selectedBike = {
-              bikeId: radio.value,
-              bikeType: radio.dataset.type,
-              hourlyRate: parseFloat(radio.dataset.rate)
-            };
+            selectedBike = { bikeId: radio.value };
             submitBtn.disabled = !hoursInput.value || hoursInput.value < 1;
           });
         });
@@ -59,28 +55,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     const hours = parseInt(hoursInput.value);
 
     try {
-      // Fetch user data from user management API
+      // Fetch user data
       const userResponse = await fetch('/api/user');
       if (!userResponse.ok) {
         throw new Error('Failed to fetch user data');
       }
       const userData = await userResponse.json();
 
-      // Store data in sessionStorage to pass to Order-new.html
-      sessionStorage.setItem('rentalData', JSON.stringify({
-        renterName: userData.renterName,
-        username: userData.username,
-        bikeId: selectedBike.bikeId,
-        bikeType: selectedBike.bikeType,
-        hours,
-        hourlyRate: selectedBike.hourlyRate,
-        isPremiumUser: userData.isPremiumUser || false // Use user data for premium status
-      }));
+      // Call backend to rent the bike
+      const response = await fetch(`/api/orders/rent?username=${encodeURIComponent(userData.username)}&bikeId=${encodeURIComponent(selectedBike.bikeId)}&hours=${hours}`, {
+        method: 'POST'
+      });
 
-      window.location.href = 'Order-new.html';
+      if (!response.ok) {
+        throw new Error('Rental failed');
+      }
+
+      const result = await response.json();
+      alert(`Rental successful! Order ID: ${result.orderId}`);
+      window.location.href = 'index.html';
     } catch (error) {
-      console.error('Error fetching user data:', error);
-      alert('Error retrieving user information. Please try again.');
+      console.error('Error during rental:', error);
+      alert('Rental failed. Please try again.');
     }
   });
 });

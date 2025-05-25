@@ -23,6 +23,9 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.userType = userType;
     }
+    public User(String username) {
+        this.username = username;
+    }
     public String getUserID() {
         return userID;
     }

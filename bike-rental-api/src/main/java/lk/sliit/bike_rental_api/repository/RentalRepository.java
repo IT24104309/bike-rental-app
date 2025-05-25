@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 
 @Repository
 public class RentalRepository {
-    private static final String FILE_PATH = "rented_bikes.txt";
+    private static final String FILE_PATH = "orders.txt";
 
     // Create: Save a new rental transaction
-    public void saveRental(RentalTransaction transaction) throws IOException {
+    public static void saveRental(RentalTransaction transaction) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             writer.write(transaction.toString());
             writer.newLine();
@@ -23,43 +23,40 @@ public class RentalRepository {
     }
 
     // Read: Get all rental transactions
-    public List<RentalTransaction> getAllRentals() throws IOException {
+    public static List<RentalTransaction> getAllRentals() throws IOException {
         List<RentalTransaction> transactions = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                RentalTransaction transaction = new RentalTransaction(
-                        parts[0], parts[1], parts[2], parts[3], parts[4],
-                        Integer.parseInt(parts[6]), Double.parseDouble(parts[7]),
-                        Boolean.parseBoolean(parts[10])
-                );
-                transaction.setRentalStart(LocalDateTime.parse(parts[5]));
-                transaction.setTotalPrice(Double.parseDouble(parts[8]));
-                transaction.setStatus(parts[9]);
-                transactions.add(transaction);
+                if (parts.length >= 6) {
+                    RentalTransaction transaction = new RentalTransaction(
+                            parts[0],  // orderId
+                            parts[1],  // username
+                            parts[2],  // bikeId
+                            parts[3],  // bikeType
+                            Double.parseDouble(parts[4])  // totalPrice
+                    );
+                    transaction.setStatus(parts[5]);
+                    transactions.add(transaction);
+                }
             }
         }
         return transactions;
     }
 
-    // Update: Update transaction status and late fees
-    public void updateRental(String orderId, String status) throws IOException {
+    // Update: Update transaction status
+    public static void updateRental(String orderId, String status) throws IOException {
         List<RentalTransaction> transactions = getAllRentals();
         for (RentalTransaction transaction : transactions) {
             if (transaction.getOrderId().equals(orderId)) {
                 transaction.setStatus(status);
-                if (status.equals("completed")) {
-                    double lateFees = transaction.calculateLateFees();
-                    transaction.setTotalPrice(transaction.getTotalPrice() + lateFees);
-                }
             }
         }
         saveAllTransactions(transactions);
     }
-
     // Delete: Remove completed transactions
-    public void deleteCompletedRental(String orderId) throws IOException {
+    public static void deleteCompletedRental(String orderId) throws IOException {
         List<RentalTransaction> transactions = getAllRentals();
         transactions = transactions.stream()
                 .filter(t -> !t.getOrderId().equals(orderId) || !t.getStatus().equals("completed"))
@@ -68,7 +65,7 @@ public class RentalRepository {
     }
 
     // Helper method to overwrite file with updated transactions
-    private void saveAllTransactions(List<RentalTransaction> transactions) throws IOException {
+    private static void saveAllTransactions(List<RentalTransaction> transactions) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (RentalTransaction transaction : transactions) {
                 writer.write(transaction.toString());
@@ -78,7 +75,7 @@ public class RentalRepository {
     }
 
     // Abstraction: Check bike availability
-    public boolean isBikeAvailable(String bikeId) throws IOException {
+    public static boolean isBikeAvailable(String bikeId) throws IOException {
         List<RentalTransaction> transactions = getAllRentals();
         return transactions.stream()
                 .noneMatch(t -> t.getBikeId().equals(bikeId) && t.getStatus().equals("ongoing"));
