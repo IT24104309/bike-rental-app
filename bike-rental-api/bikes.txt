@@ -1,15 +1,17 @@
 [ {
-  "bikeId" : "e2db082b-fcb6-4f10-bbd4-f4260d08bf70",
+  "bikeId" : "2244717b-6918-43eb-b173-8e394e2fb61d",
   "type" : "Electric Bike",
   "status" : null,
   "hourlyRate" : 2.0,
   "registrationNumber" : "BEC 123",
-  "model" : "yamaha"
+  "model" : "yamaha",
+  "available" : false
 }, {
-  "bikeId" : "0c7fb86a-fd18-413d-9a92-507a462745a0",
+  "bikeId" : "9ab686d9-db11-4ce0-aed8-0c27ece3c1a7",
   "type" : "Electric Bike",
   "status" : null,
   "hourlyRate" : 5.0,
   "registrationNumber" : "BEC 124",
-  "model" : "Yamaha"
+  "model" : "Lumala",
+  "available" : true
 } ]

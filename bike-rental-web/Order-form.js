@@ -57,22 +57,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const hours = parseInt(hoursInput.value);
 
     try {
-      // Fetch user data from user management API
-      const userResponse = await fetch(`http://localhost:8080/api/users`);
-      if (!userResponse.ok) {
-        throw new Error('Failed to fetch user data');
-      }
-      const userData = await userResponse.json();
+
+      const userID = sessionStorage.getItem('userId');
+      const username = sessionStorage.getItem('username');
 
       // Store data in sessionStorage to pass to Order-new.html
       sessionStorage.setItem('rentalData', JSON.stringify({
-        renterName: userData.renterName,
-        username: userData.username,
+        userID: userID,
+        username: username,
         bikeId: selectedBike.bikeId,
         bikeType: selectedBike.bikeType,
         hours,
         hourlyRate: selectedBike.hourlyRate,
-        isPremiumUser: userData.isPremiumUser || false
       }));
 
       window.location.href = 'Order-new.html';

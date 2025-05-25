@@ -28,7 +28,11 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
 
         if (response.ok) {
             // Example: Redirect to dashboard
+            const user = await response.json(); // Parse JSON response
+
             alert("Login successful!");
+            sessionStorage.setItem("userId", user.userID);
+            sessionStorage.setItem("username", user.username);
             window.location.href = "User-dashboard.html"; // or your protected route
         } else {
             const error = await response.json();

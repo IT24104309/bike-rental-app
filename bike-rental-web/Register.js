@@ -38,7 +38,11 @@ document.getElementById("signupForm").addEventListener("submit", async function(
         });
 
         if (response.ok) {
+            const user = await response.json(); // Parse JSON response
+
             alert("Account created successfully!");
+            sessionStorage.setItem("userId", user.userID);
+            sessionStorage.setItem("username", user.username);
             window.location.href = "User-dashboard.html"; // ✅ Redirect after successful registration
             return;
         } else {

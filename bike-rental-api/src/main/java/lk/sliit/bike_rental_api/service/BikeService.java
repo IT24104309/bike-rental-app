@@ -2,8 +2,8 @@ package lk.sliit.bike_rental_api.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lk.sliit.bike_rental_api.models.AdminUser;
 import lk.sliit.bike_rental_api.models.Bike;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -16,6 +16,8 @@ import java.util.Map;
 @Service
 public class BikeService {
     private static final String filePath = "bikes.txt";
+
+    @Getter
     private final Map<String, Bike> bikeMap = new LinkedHashMap<>();//my key is admin id & my value is adminuser
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -25,6 +27,7 @@ public class BikeService {
 
     public void addBike(Bike bike) {
         //VERIFY THE BIKE REGISTRATION NUMBER BEFORE SAVE
+        bike.setAvailable(true);
         boolean exists = bikeMap.values().stream()
                 .anyMatch(existingBike -> existingBike.getRegistrationNumber().equalsIgnoreCase(bike.getRegistrationNumber()));
 
@@ -70,11 +73,12 @@ public class BikeService {
         }
     }
 
-    private void saveBikesToFile() {
+    public void saveBikesToFile() {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(filePath), new ArrayList<>(bikeMap.values()));
         } catch (IOException e) {
             throw new RuntimeException("Failed to save admins to file", e);
         }
     }
+
 }

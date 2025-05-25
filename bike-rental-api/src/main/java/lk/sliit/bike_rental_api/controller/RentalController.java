@@ -1,21 +1,23 @@
 package lk.sliit.bike_rental_api.controller;
 
-import lk.sliit.bike_rental_api.models.Bike;
+import lk.sliit.bike_rental_api.enums.OrderStatus;
 import lk.sliit.bike_rental_api.models.RentRequest;
 import lk.sliit.bike_rental_api.service.BikeService;
-import lk.sliit.bike_rental_api.service.RentalService;
+import lk.sliit.bike_rental_api.service.RentalServiceV1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/rentals")
+@RequestMapping("/api/rental-management")
 public class RentalController {
 
     @Autowired
-    private RentalService rentalService;
+    private RentalServiceV1 rentalService;
 
     @Autowired
     private BikeService bikeService;
@@ -24,10 +26,11 @@ public class RentalController {
     // Rent Request: Queue or Assign
     // ===========================
     @PostMapping("/request")
-    public ResponseEntity<String> requestBike(
-            @RequestParam String userId,
-            @RequestParam String bikeId) {
-        String result = rentalService.requestBike(bikeId, userId);
+    public ResponseEntity<String> requestBike(@RequestBody RentRequest request) {
+        request.setOrderId(UUID.randomUUID().toString());
+        request.setRequestTime(LocalDateTime.now());
+        request.setStatus(OrderStatus.PROCESSING);
+        String result = rentalService.requestBike(request);
         return ResponseEntity.ok(result);
     }
 
@@ -36,34 +39,21 @@ public class RentalController {
     // ===========================
     @PostMapping("/release")
     public ResponseEntity<String> releaseBike(
-            @RequestParam String bikeId) {
-        String result = rentalService.releaseBike(bikeId);
+            @RequestParam String bikeId, @RequestParam String orderId) {
+        String result = rentalService.releaseBike(bikeId,orderId);
         return ResponseEntity.ok(result);
     }
 
-    // ===========================
-    // View Queue for a Bike
-    // ===========================
-    @GetMapping("/queue/{bikeId}")
-    public ResponseEntity<List<RentRequest>> getQueue(@PathVariable String bikeId) {
-        List<RentRequest> queue = rentalService.getQueue(bikeId);
-        return ResponseEntity.ok(queue);
+    @PutMapping("/cancel")
+    public ResponseEntity<String> cancelRequest(
+            @RequestParam String bikeId, @RequestParam String orderId) {
+        String result = rentalService.releaseBike(bikeId,orderId);
+        return ResponseEntity.ok(result);
     }
 
-    // ===========================
-    // Add New Bike
-    // ===========================
-    @PostMapping("/add-bike")
-    public ResponseEntity<String> addBike(@RequestBody Bike bike) {
-        rentalService.addBike(bike);
-        return ResponseEntity.ok("Bike added successfully.");
-    }
-
-    // ===========================
-    // List All Bikes (Optional)
-    // ===========================
-    @GetMapping("/bikes")
-    public ResponseEntity<List<Bike>> getAllBikes() {
-        return ResponseEntity.ok(bikeService.getAllBikes());
+    @GetMapping("/get-orders/{userId}")
+    public ResponseEntity<List<RentRequest>> getOrdersByUserId(@PathVariable String userId) {
+        var orders = rentalService.getOrdersByUserId(userId);
+        return ResponseEntity.ok(orders);
     }
 }

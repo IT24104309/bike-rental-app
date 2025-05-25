@@ -6,7 +6,6 @@ import lk.sliit.bike_rental_api.models.RentalTransaction;
 import lk.sliit.bike_rental_api.service.BikeService;
 import lk.sliit.bike_rental_api.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
