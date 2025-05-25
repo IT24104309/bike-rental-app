@@ -1,80 +1,69 @@
 package lk.sliit.bike_rental_api.controller;
 
 import lk.sliit.bike_rental_api.models.Bike;
-import lk.sliit.bike_rental_api.models.RentalTransaction;
+import lk.sliit.bike_rental_api.models.RentRequest;
 import lk.sliit.bike_rental_api.service.BikeService;
 import lk.sliit.bike_rental_api.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api/rentals")
 public class RentalController {
 
     @Autowired
     private RentalService rentalService;
+
     @Autowired
     private BikeService bikeService;
 
-    // Create: Rent a bike
-    @PostMapping("/rent")
-    public ResponseEntity<RentalTransaction> rentBike(
-            @RequestParam String username,
-            @RequestParam String bikeId,
-            @RequestParam int hours) throws IOException {
-        RentalTransaction transaction = rentalService.rentBike(username, bikeId, hours);
-        return ResponseEntity.ok(transaction);
+    // ===========================
+    // Rent Request: Queue or Assign
+    // ===========================
+    @PostMapping("/request")
+    public ResponseEntity<String> requestBike(
+            @RequestParam String userId,
+            @RequestParam String bikeId) {
+        String result = rentalService.requestBike(bikeId, userId);
+        return ResponseEntity.ok(result);
     }
 
-    // Read: Get all rentals
-    @GetMapping("/rentals")
-    public ResponseEntity<List<RentalTransaction>> getAllRentals() throws IOException {
-        return ResponseEntity.ok(rentalService.getAllRentals());
+    // ===========================
+    // Release: Return a Bike
+    // ===========================
+    @PostMapping("/release")
+    public ResponseEntity<String> releaseBike(
+            @RequestParam String bikeId) {
+        String result = rentalService.releaseBike(bikeId);
+        return ResponseEntity.ok(result);
     }
 
-    // Update: Confirm bike return
-    @PutMapping("/return/{orderId}")
-    public ResponseEntity<String> confirmReturn(@PathVariable String orderId) throws IOException {
-        rentalService.confirmReturn(orderId);
-        return ResponseEntity.ok("Bike returned successfully");
+    // ===========================
+    // View Queue for a Bike
+    // ===========================
+    @GetMapping("/queue/{bikeId}")
+    public ResponseEntity<List<RentRequest>> getQueue(@PathVariable String bikeId) {
+        List<RentRequest> queue = rentalService.getQueue(bikeId);
+        return ResponseEntity.ok(queue);
     }
 
-    // Update: Cancel rental
-    @PutMapping("/cancel/{orderId}")
-    public ResponseEntity<String> cancelRental(@PathVariable String orderId) throws IOException {
-        rentalService.cancelRental(orderId);
-        return ResponseEntity.ok("Rental cancelled successfully");
+    // ===========================
+    // Add New Bike
+    // ===========================
+    @PostMapping("/add-bike")
+    public ResponseEntity<String> addBike(@RequestBody Bike bike) {
+        rentalService.addBike(bike);
+        return ResponseEntity.ok("Bike added successfully.");
     }
 
-    // Delete: Remove completed rental
-    @DeleteMapping("/delete/{orderId}")
-    public ResponseEntity<String> deleteRental(@PathVariable String orderId) throws IOException {
-        rentalService.deleteCompletedRental(orderId);
-        return ResponseEntity.ok("Completed rental deleted successfully");
+    // ===========================
+    // List All Bikes (Optional)
+    // ===========================
+    @GetMapping("/bikes")
+    public ResponseEntity<List<Bike>> getAllBikes() {
+        return ResponseEntity.ok(bikeService.getAllBikes());
     }
-
-    // New: Get available bikes by type
-    @GetMapping("/available")
-    public ResponseEntity<List<Bike>> getAvailableBikes(@RequestParam(required = false) String bikeType) throws IOException {
-        List<Bike> allBikes = bikeService.getAllBikes();
-
-        List<RentalTransaction> rentals = rentalService.getAllRentals();
-        List<String> rentedBikeIds = rentals.stream()
-                .filter(t -> t.getStatus().equals("ongoing"))
-                .map(RentalTransaction::getBikeId)
-                .toList();
-        List<Bike> availableBikes = allBikes.stream()
-                .filter(bike -> !rentedBikeIds.contains(bike.getBikeId()))
-                .filter(bike -> bikeType == null || bike.getType().equalsIgnoreCase(bikeType))
-                .toList();
-        return ResponseEntity.ok(availableBikes);
-    }
-
-
 }

@@ -11,18 +11,21 @@ public class Bike implements Serializable {
     private double hourlyRate;
     private String registrationNumber;
     private String model;
+    private boolean available = true;
 
     public Bike() {
     }
 
 
-    public Bike(String bikeId, String type, String status, double hourlyRate, String registrationNumber, String model) {
+    public Bike(String bikeId, String type, String status, double hourlyRate, String registrationNumber, String model,boolean available) {
         this.bikeId = bikeId;
         this.type = type;
         this.status = status;
         this.hourlyRate = hourlyRate;
         this.registrationNumber = registrationNumber;
         this.model = model;
+        this.available=available;
+
     }
 
 
@@ -73,5 +76,12 @@ public class Bike implements Serializable {
 
     public void setModel(String model) {
         this.model = model;
+    }
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

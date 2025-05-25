@@ -1,3 +1,5 @@
 578b47aa-a1c1-4a4f-9e51-2561ffbcddf9,sithara,e2db082b-fcb6-4f10-bbd4-f4260d08bf70,Electric Bike,4.00,completed
 8c88db14-dfc6-48d6-b5a4-d9cf941d9221,sayu,e2db082b-fcb6-4f10-bbd4-f4260d08bf70,Electric Bike,4.00,cancelled
-310bbd82-10d3-4313-b001-6f3183148feb,Borrower,e2db082b-fcb6-4f10-bbd4-f4260d08bf70,Electric Bike,2.00,ongoing
+310bbd82-10d3-4313-b001-6f3183148feb,Borrower,e2db082b-fcb6-4f10-bbd4-f4260d08bf70,Electric Bike,2.00,cancelled
+397cc427-ab35-4f7e-b503-3f84547dbc4f,Borrower 3,e2db082b-fcb6-4f10-bbd4-f4260d08bf70,Electric Bike,2.00,ongoing
+d76b59f0-7994-4456-a705-e580a88b8be0,Borrower neww,e2db082b-fcb6-4f10-bbd4-f4260d08bf70,Electric Bike,6.00,cancelled

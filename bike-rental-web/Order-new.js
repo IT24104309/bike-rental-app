@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Populate summary
-  document.getElementById('renterName').textContent = rentalData.renterName;
   document.getElementById('username').textContent = rentalData.username;
   document.getElementById('bikeId').textContent = rentalData.bikeId;
   document.getElementById('bikeType').textContent = rentalData.bikeType;
@@ -30,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({
-          renterName: rentalData.renterName,
           username: rentalData.username,
           bikeId: rentalData.bikeId,
           bikeType: rentalData.bikeType,
