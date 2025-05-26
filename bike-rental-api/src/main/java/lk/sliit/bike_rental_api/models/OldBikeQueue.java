@@ -1,12 +1,12 @@
 package lk.sliit.bike_rental_api.models;
 
-public class BikeQueue {
+public class OldBikeQueue {
 
     private Bike bike;
     private User[] userQueue;
     private int first = 0, size = 0;
 
-    public BikeQueue(Bike bike, int queueCapacity) {
+    public OldBikeQueue(Bike bike, int queueCapacity) {
         this.bike = bike;
         this.userQueue = new User[queueCapacity];
     }

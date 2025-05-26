@@ -1,7 +1,7 @@
 package lk.sliit.bike_rental_api.service;
 
 import lk.sliit.bike_rental_api.models.Bike;
-import lk.sliit.bike_rental_api.models.BikeQueue;
+import lk.sliit.bike_rental_api.models.OldBikeQueue;
 import lk.sliit.bike_rental_api.models.RentalTransaction;
 import lk.sliit.bike_rental_api.models.User;
 import lk.sliit.bike_rental_api.repository.RentalRepository;
@@ -20,7 +20,7 @@ public class RentalService {
     @Autowired
     private BikeService bikeService;
 
-    private final Map<String, BikeQueue> bikeQueues = new HashMap<>();
+    private final Map<String, OldBikeQueue> bikeQueues = new HashMap<>();
 
     public RentalTransaction rentBike(String username, String bikeId, int hours) throws IOException {
 
@@ -32,7 +32,7 @@ public class RentalService {
         // If bike is not available, enqueue user instead
         if (!RentalRepository.isBikeAvailable(bikeId)) {
             // Create or fetch queue for this bike
-            BikeQueue queue = bikeQueues.computeIfAbsent(bikeId, id -> new BikeQueue(bike, 10));
+            OldBikeQueue queue = bikeQueues.computeIfAbsent(bikeId, id -> new OldBikeQueue(bike, 10));
             queue.enqueue(new User(username));
             int ahead = queue.getSize() - 1; // user just enqueued, so all before them are ahead
 
@@ -58,7 +58,7 @@ public class RentalService {
                 .map(RentalTransaction::getBikeId)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Rental not found"));
-        BikeQueue queue = bikeQueues.get(bikeId);
+        OldBikeQueue queue = bikeQueues.get(bikeId);
         if (queue != null && queue.getSize() > 0) {
             User nextUser = queue.dequeue();
             // Alert the user or log their turn (e.g., send email or notification)

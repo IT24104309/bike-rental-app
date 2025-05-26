@@ -1,5 +1,8 @@
 package lk.sliit.bike_rental_api.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RentRequestQueue  {
     private int maxSize;
     private RentRequest[] queArray;
@@ -79,4 +82,23 @@ public class RentRequestQueue  {
             System.out.println((i + 1) + ". " + req.getUserId() + " requested bike " + req.getBikeId());
         }
     }
+
+    // to make it easier to save to files
+    public static RentRequestQueue fromList(List<RentRequest> list, int maxSize) {
+        RentRequestQueue queue = new RentRequestQueue(maxSize);
+        for (RentRequest request : list) {
+            queue.insert(request);
+        }
+        return queue;
+    }
+
+    public List<RentRequest> toList() {
+        List<RentRequest> list = new ArrayList<>();
+        for (int i = 0; i < nItems; i++) {
+            list.add(get(i)); // reuse your get(i) logic
+        }
+        return list;
+    }
+
+
 }
